@@ -2,21 +2,22 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>后段供应商考核报告</title>
+<title>2026H1 后段供应商考核报告</title>
 <script src="https://cdn.jsdelivr.net/npm/plotly.js@2.32.0/dist/plotly.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f7fa;color:#333}
 .container{max-width:1200px;margin:0 auto;padding:20px}
-h1{font-size:24px;margin-bottom:5px}
+h1{font-size:24px;margin:0 0 5px 0}
 .subtitle{color:#888;font-size:13px;margin-bottom:20px}
-.tabs{display:flex;gap:8px;margin-bottom:20px;background:#fff;padding:6px;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.08);flex-wrap:wrap}
-.tab-btn{padding:10px 14px;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;background:transparent;color:#666;transition:all 0.2s}
+.tabs{display:flex;gap:8px;margin-bottom:20px;background:#fff;padding:6px;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);flex-wrap:wrap}
+.tab-btn{padding:10px 14px;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;background:transparent;color:#666;transition:all .2s}
 .tab-btn:hover{background:#f0f2f5}
 .tab-btn.active{background:#4472C4;color:#fff}
-.tab-content{display:none}
+.tab-content{display:none;animation:fadeIn .3s}
 .tab-content.active{display:block}
-.card{background:#fff;border-radius:10px;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.card{background:#fff;border-radius:10px;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .card h3{font-size:17px;margin-bottom:12px}
 table{width:100%;border-collapse:collapse;font-size:12px}
 th,td{padding:7px 10px;text-align:center;border-bottom:1px solid #eee}
@@ -25,14 +26,15 @@ tr:hover{background:#f8f9fb}
 .chart{width:100%}
 .caption{color:#888;font-size:12px;margin-top:8px}
 .stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-.stat{background:#f8f9fb;padding:10px 18px;border-radius:8px;text-align:center}
+.stat{background:#f8f9fb;padding:10px 18px;border-radius:8px;text-align:center;min-width:80px}
 .stat .val{font-size:24px;font-weight:700;color:#4472C4}
 .stat .lbl{font-size:11px;color:#888}
 .stat.warn .val{color:#c62828}
-.warn-badge{background:#FFF3E0;color:#E65100;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;margin-left:4px}
+.stat.good .val{color:#2e7d32}
+.warn-badge{background:#FFF3E0;color:#E65100;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;margin-left:4px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:800px){.grid2{grid-template-columns:1fr}}
-.filter-btn{padding:6px 14px;border:1px solid #ddd;border-radius:6px;cursor:pointer;font-size:12px;background:#fff;margin-right:6px}
+.filter-btn{padding:6px 14px;border:1px solid #ddd;border-radius:6px;cursor:pointer;font-size:12px;background:#fff;margin:0 4px 4px 0}
 .filter-btn.on{background:#4472C4;color:#fff;border-color:#4472C4}
 .footer{text-align:center;color:#aaa;font-size:12px;padding:20px}
 .good{color:#2e7d32;font-size:11px;line-height:1.6}
@@ -41,189 +43,193 @@ tr:hover{background:#f8f9fb}
 .score-mid{color:#e65100;font-weight:700}
 .score-low{color:#c62828;font-weight:700}
 .pool-tag{display:inline-block;background:#E3F2FD;color:#1565C0;padding:1px 6px;border-radius:4px;font-size:10px;margin:1px}
+.wh-tag{display:inline-block;background:#E8F5E9;color:#2E7D32;padding:1px 6px;border-radius:4px;font-size:10px;margin:1px}
+.formula-box{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:16px 20px;border-radius:10px;margin:14px 0;text-align:center}
+.formula-box b{font-size:15px}
+.formula-box .sub{font-size:11px;opacity:.85;margin-top:4px}
 </style>
 </head>
 <body>
 <div class="container">
-<h1>📦 2026年上半年度后段供应商考核报告</h1>
+<h1>📦 2026年上半年度 后段供应商考核报告</h1>
 <p class="subtitle" id="updateInfo"></p>
 <div class="tabs">
-<button class="tab-btn active" onclick="switchTab(0)">📋 排名总览</button>
-<button class="tab-btn" onclick="switchTab(1)">📊 数据分析</button>
-<button class="tab-btn" onclick="switchTab(2)">🔍 供应商详情</button>
-<button class="tab-btn" onclick="switchTab(3)">📋 综合评估</button>
+<button class="tab-btn active" onclick="switchTab(0)">📐 评分体系</button>
+<button class="tab-btn" onclick="switchTab(1)">🗺️ 供应商地图</button>
+<button class="tab-btn" onclick="switchTab(2)">📊 排名总览</button>
+<button class="tab-btn" onclick="switchTab(3)">🔍 供应商详情</button>
+<button class="tab-btn" onclick="switchTab(4)">📋 综合评估</button>
 </div>
 <div class="tab-content active" id="tab0"></div>
 <div class="tab-content" id="tab1"></div>
 <div class="tab-content" id="tab2"></div>
 <div class="tab-content" id="tab3"></div>
-<div class="footer">2026年上半年度后段供应商考核报告</div>
+<div class="tab-content" id="tab4"></div>
+<div class="footer">2026上半年度·后段供应商考核报告·HANHAI</div>
 </div>
 <script src="report_data.js"></script>
+<script src="supplier_locations.js"></script>
 <script>
-// 数据预处理
 const R=DATA.results.sort((a,b)=>b.total-a.total);
 R.forEach((x,i)=>{
   x.rank=i+1;
-  x.scoreClass=x.total>=9?'score-high':x.total>=8?'score-mid':'score-low';
-  x.hasGood=x.good&&x.good.length>0;
-  x.hasBad=x.bad&&x.bad.length>0;
+  x.sc=x.total>=9?'score-high':x.total>=8?'score-mid':'score-low';
   x.people=x.zg_n+x.gh_n;
   x.isDual=x.zg_n>0&&x.gh_n>0;
-  x.groupLabel=x.isDual?'双组':x.zg_n>0?'仅整柜':'仅散货';
 });
-document.getElementById('updateInfo').textContent='数据更新：'+DATA.updated+' | 整柜组5人 + 港后组17人 | '+R.length+'家供应商';
+document.getElementById('updateInfo').textContent='数据更新：'+DATA.updated+' | 整柜组5人+港后组17人 | '+R.length+'家供应商 | 13项考核指标加权';
 
 function switchTab(i){
   document.querySelectorAll('.tab-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
   document.querySelectorAll('.tab-content').forEach((c,j)=>c.classList.toggle('active',j===i));
-  setTimeout(()=>{Plotly.Plots.resize(document.querySelector('.tab-content.active'))},150);
+  setTimeout(()=>Plotly.Plots.resize(document.querySelector('.tab-content.active')),200);
 }
 
-//=== Tab0: 排名总览 ===
+// ═══ Tab0: 评分体系 ═══
 (function(){
-  const hi=R.filter(x=>x.total>=9).length, mi=R.filter(x=>x.total>=8&&x.total<9).length, lo=R.filter(x=>x.total<8).length;
-  let tbl='<tr><th>排名</th><th>供应商</th><th>区域</th><th>类型</th><th>均分</th><th>整柜组</th><th>散货组</th><th>总人数</th><th>评分组别</th></tr>';
-  R.forEach(x=>{
-    tbl+=`<tr><td>${x.rank}</td><td style="text-align:left;font-weight:600">${x.name}${x.people<3?'<span class="warn-badge">样本少</span>':''}</td>
-    <td>${x.region}</td><td>${x.biz_type}</td><td class="${x.scoreClass}">${x.total.toFixed(2)}</td>
-    <td>${x.zg_n>0?x.zg_n+'人':'—'}</td><td>${x.gh_n>0?x.gh_n+'人':'—'}</td><td>${x.people}人</td><td>${x.groupLabel}</td></tr>`;
-  });
+  const rows=[
+    ['服务表现','65%','提柜及时性','15%','自营仓参考服务等级；非自盈仓码头可提后2工作日'],
+    ['','','拆柜及时性','15%','提柜后3工作日内完成'],
+    ['','','派送时效性','20%','拆柜+7天内完成交仓'],
+    ['','','还空时效性','15%','拆柜后或报空后2工作日内还'],
+    ['','','亚马逊预约能力','20%','预约派送在拆柜后7天内'],
+    ['','','异常率','15%','0起10分；2起8分；超过3起0分'],
+    ['工作配合度','15%','路由/POD更新','20%','送货完成最晚第二天提供POD'],
+    ['','','消息邮件回复','20%','飞书15分钟回复；邮件当天回'],
+    ['','','风险把控','20%','实时同步行情及突发情况'],
+    ['','','异常反馈方案','20%','主动反馈并提供合理方案'],
+    ['','','账单及时准确','20%','自营仓周四推送；非自营仓3工作日'],
+    ['总体成本','20%','成本承担增长','50%','共同承担异常/临时成本'],
+    ['','','报价稳定性','50%','固定报价≥1月有效'],
+  ];
+  let h=rows.map(r=>'<tr>'+r.map(c=>`<td style="font-size:11px;text-align:${r[0]?'left':''}">${c}</td>`).join('')+'</tr>').join('');
   document.getElementById('tab0').innerHTML=`
-    <div class="stats"><div class="stat"><div class="val">${hi}</div><div class="lbl">≥9.0分</div></div><div class="stat"><div class="val">${mi}</div><div class="lbl">8.0-9.0分</div></div><div class="stat warn"><div class="val">${lo}</div><div class="lbl">&lt;8.0分</div></div><div class="stat"><div class="val">${R.length}</div><div class="lbl">总计</div></div><div class="stat"><div class="val">${R.reduce((s,x)=>s+x.people,0)}</div><div class="lbl">总人次</div></div></div>
-    <div class="card"><h3>综合评分排名</h3><div class="chart" id="chartRank" style="height:${Math.max(350,R.length*20)}px"></div></div>
-    <div class="card"><h3>排名详情</h3><table>${tbl}</table></div>`;
-  setTimeout(()=>{
-    const colors=R.map(x=>x.total>=9?'#2e7d32':x.total>=8?'#4472C4':x.total>=7?'#ED7D31':'#C00000');
-    Plotly.newPlot('chartRank',[{type:'bar',y:R.map(x=>x.name).reverse(),x:R.map(x=>x.total).reverse(),orientation:'h',marker:{color:colors.reverse()},text:R.map(x=>x.total.toFixed(2)).reverse(),textposition:'outside',textfont:{size:12}}],{xaxis:{range:[0,10.5],title:'综合评分'},margin:{t:10,l:180,r:50,b:30}},{responsive:true});
-  },200);
+    <div class="card"><h3>考核目的</h3>
+      <p style="font-size:14px;line-height:2;color:#555">
+      为持续优化后段供应商合作质量，对<b>2026年1-6月</b>合作的 <b>${R.length}家</b> 后段服务商进行多维度绩效考核。<br>
+      覆盖<b>美国、加拿大、英国</b>三个国家，业务类型涵盖<b>整柜直送、散货拆送、综合服务</b>。
+      </p>
+      <div class="formula-box">
+        <b>总评分 = 服务表现 × 65% + 工作配合度 × 15% + 总体成本 × 20%</b>
+        <div class="sub">13项考核指标 · 1-10分制 · 「/」表示该评分人不涉及此供应商</div>
+      </div>
+    </div>
+    <div class="card"><h3>评分维度详解</h3><table><tr><th>模块</th><th>权重</th><th>考核项</th><th>项权重</th><th>考核标准</th></tr>${h}</table></div>
+  `;
 })();
 
-//=== Tab1: 数据分析 ===
+// ═══ Tab1: 供应商地图 ═══
 (function(){
-  // 按区域统计
-  const regions={};R.forEach(x=>{if(!regions[x.region])regions[x.region]=[];regions[x.region].push(x.total);});
-  const regionAvgs=Object.entries(regions).map(([k,v])=>({name:k,avg:(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1),count:v.length}));
+  const traces=[], annotations=[];
+  const colors=['#4472C4','#ED7D31','#70AD47','#FFC000','#5B9BD5','#A5A5A5','#C00000','#7030A0','#00B0F0','#FF6B6B'];
+  let ci=0;
   
-  // 按类型统计
-  const types={};R.forEach(x=>{if(!types[x.biz_type])types[x.biz_type]=[];types[x.biz_type].push(x.total);});
-  const typeAvgs=Object.entries(types).map(([k,v])=>({name:k,avg:(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1),count:v.length}));
-  
-  // 评分人数分布
-  const pplCnt={};R.forEach(x=>{pplCnt[x.people]=(pplCnt[x.people]||0)+1;});
-  
-  // 双组/单组统计
-  const dual=R.filter(x=>x.isDual).length, zgOnly=R.filter(x=>x.zg_n>0&&x.gh_n===0).length, ghOnly=R.filter(x=>x.gh_n>0&&x.zg_n===0).length;
-  
-  // 有评价反馈的供应商
-  const withGood=R.filter(x=>x.hasGood).length, withBad=R.filter(x=>x.hasBad).length;
+  Object.entries(WAREHOUSES).forEach(([name, locs])=>{
+    const sup=R.find(x=>x.name===name);
+    if(!sup||locs.length===0)return;
+    const c=colors[ci%colors.length];ci++;
+    const lats=locs.map(l=>l.lat), lons=locs.map(l=>l.lon), labels=locs.map(l=>l.label);
+    traces.push({
+      type:'scattergeo',lat:lats,lon:lons,mode:'markers+text',
+      text:labels,textposition:'top center',textfont:{size:9,color:c},
+      marker:{size:Math.max(6,sup.total*1.5),color:c,line:{width:1,color:'#fff'}},
+      name:name+' ('+sup.total.toFixed(1)+')',
+      hovertemplate:name+'<br>'+sup.total.toFixed(1)+'分<br>'+sup.biz_type+'<br>%{text}<extra></extra>'
+    });
+  });
   
   document.getElementById('tab1').innerHTML=`
-    <div class="stats"><div class="stat"><div class="val">${dual}</div><div class="lbl">双组评分</div></div><div class="stat"><div class="val">${zgOnly}</div><div class="lbl">仅整柜组</div></div><div class="stat"><div class="val">${ghOnly}</div><div class="lbl">仅散货组</div></div><div class="stat"><div class="val">${withGood}</div><div class="lbl">有正面反馈</div></div><div class="stat warn"><div class="val">${withBad}</div><div class="lbl">有待改善</div></div></div>
+    <div class="stats"><div class="stat"><div class="val">${R.filter(x=>WAREHOUSES[x.name]).length}</div><div class="lbl">有仓库数据</div></div><div class="stat"><div class="val">${R.filter(x=>x.region==='美国').length}</div><div class="lbl">美国</div></div><div class="stat"><div class="val">${R.filter(x=>x.region==='英国').length}</div><div class="lbl">英国</div></div><div class="stat"><div class="val">${R.filter(x=>x.region==='加拿大').length}</div><div class="lbl">加拿大</div></div></div>
+    <div class="card"><h3>供应商仓库/覆盖分布</h3><p class="caption">标记大小=评分高低，颜色区分不同供应商。点击图例可筛选</p><div class="chart" id="chartMap" style="height:500px"></div></div>
     <div class="grid2">
-      <div class="card"><h3>按区域</h3><div class="chart" id="chartRegion" style="height:250px"></div></div>
-      <div class="card"><h3>按业务类型</h3><div class="chart" id="chartType" style="height:250px"></div></div>
-    </div>
-    <div class="grid2">
-      <div class="card"><h3>评分人数分布</h3><div class="chart" id="chartPpl" style="height:250px"></div></div>
-      <div class="card"><h3>评分组别分布</h3><div class="chart" id="chartGroup" style="height:250px"></div></div>
+      <div class="card"><h3>按区域统计</h3><div class="chart" id="chartRegionH" style="height:260px"></div></div>
+      <div class="card"><h3>按业务类型</h3><div class="chart" id="chartTypeH" style="height:260px"></div></div>
     </div>`;
   setTimeout(()=>{
-    Plotly.newPlot('chartRegion',[{type:'bar',x:regionAvgs.map(x=>x.name),y:regionAvgs.map(x=>parseFloat(x.avg)),marker:{color:'#4472C4'},text:regionAvgs.map(x=>x.avg+' ('+x.count+'家)'),textposition:'outside'}],{yaxis:{range:[0,10]},margin:{t:20,b:40}},{responsive:true});
-    Plotly.newPlot('chartType',[{type:'bar',x:typeAvgs.map(x=>x.name),y:typeAvgs.map(x=>parseFloat(x.avg)),marker:{color:['#4472C4','#70AD47','#ED7D31']},text:typeAvgs.map(x=>x.avg+' ('+x.count+'家)'),textposition:'outside'}],{yaxis:{range:[0,10]},margin:{t:20,b:40}},{responsive:true});
-    Plotly.newPlot('chartPpl',[{type:'bar',x:Object.keys(pplCnt).map(Number).sort((a,b)=>a-b),y:Object.keys(pplCnt).sort((a,b)=>a-b).map(k=>pplCnt[k]),marker:{color:'#70AD47'}}],{xaxis:{title:'有效评分人数',dtick:1},yaxis:{title:'供应商数'},margin:{t:20}},{responsive:true});
-    Plotly.newPlot('chartGroup',[{type:'pie',labels:['双组评分','仅整柜组','仅散货组'],values:[dual,zgOnly,ghOnly],marker:{colors:['#4472C4','#ED7D31','#70AD47']},textinfo:'label+value'}],{margin:{t:10}},{responsive:true});
+    Plotly.newPlot('chartMap',traces,{geo:{scope:'world',projection:{type:'natural earth'},showland:true,landcolor:'#f5f5f5',showocean:true,oceancolor:'#e3f2fd',showcountries:true,countrycolor:'#ddd',center:{lat:38,lon:-95},lonaxis:{range:[-130,-65]},lataxis:{range:[25,55]}},showlegend:true,legend:{x:1.02,y:1,font:{size:9}},margin:{t:10,l:10,r:10,b:10}},{responsive:true});
+    const regions={};R.forEach(x=>{regions[x.region]=(regions[x.region]||[]).concat(x.total);});
+    const ra=Object.entries(regions).map(([k,v])=>({name:k,avg:v.reduce((a,b)=>a+b)/v.length,n:v.length}));
+    Plotly.newPlot('chartRegionH',[{type:'bar',x:ra.map(x=>x.name),y:ra.map(x=>x.avg),marker:{color:['#4472C4','#C00000','#70AD47']},text:ra.map(x=>x.avg.toFixed(1)+' ('+x.n+'家)'),textposition:'outside'}],{yaxis:{range:[0,10],title:'均分'},margin:{t:20}},{responsive:true});
+    const types={};R.forEach(x=>{types[x.biz_type]=(types[x.biz_type]||[]).concat(x.total);});
+    const ta=Object.entries(types).map(([k,v])=>({name:k,avg:v.reduce((a,b)=>a+b)/v.length,n:v.length}));
+    Plotly.newPlot('chartTypeH',[{type:'bar',x:ta.map(x=>x.name),y:ta.map(x=>x.avg),marker:{color:['#4472C4','#70AD47','#ED7D31']},text:ta.map(x=>x.avg.toFixed(1)+' ('+x.n+'家)'),textposition:'outside'}],{yaxis:{range:[0,10]},margin:{t:20}},{responsive:true});
+  },300);
+})();
+
+// ═══ Tab2: 排名总览 ═══
+(function(){
+  const hi=R.filter(x=>x.total>=9).length,mi=R.filter(x=>x.total>=8&&x.total<9).length,lo=R.filter(x=>x.total<8).length;
+  const avg=R.reduce((s,x)=>s+x.total,0)/R.length;
+  let tbl='<tr><th>#</th><th>供应商</th><th>区域</th><th>类型</th><th>均分</th><th>合作状态</th><th>合同</th></tr>';
+  R.forEach(x=>{
+    const w=WAREHOUSES[x.name]||[];
+    const whTags=w.length?w.map(l=>'<span class="wh-tag">'+l.label+'</span>').join(' '):'';
+    tbl+=`<tr><td>${x.rank}</td><td style="text-align:left;font-weight:600">${x.name}${x.people<3?'<span class="warn-badge">评少</span>':''}</td>
+    <td>${x.region}</td><td>${x.biz_type}</td><td class="${x.sc}">${x.total.toFixed(1)}</td>
+    <td>${x.coop||'—'}</td><td style="font-size:10px;text-align:left">${(x.contract||'—').substring(0,30)}</td></tr>
+    <tr style="background:#fafafa"><td></td><td colspan="6" style="text-align:left;font-size:10px;padding:4px 10px">
+    🏭 ${whTags||'无仓库数据'} &nbsp; ${x.pool?'📋 '+(x.pool.replace(/\n/g,' ').substring(0,60)):''}</td></tr>`;
+  });
+  document.getElementById('tab2').innerHTML=`
+    <div class="stats"><div class="stat"><div class="val">${avg.toFixed(1)}</div><div class="lbl">整体均分</div></div><div class="stat"><div class="val">${hi}</div><div class="lbl">≥9.0</div></div><div class="stat"><div class="val">${mi}</div><div class="lbl">8.0-9.0</div></div><div class="stat warn"><div class="val">${lo}</div><div class="lbl">&lt;8.0</div></div></div>
+    <div class="card"><h3>综合评分排名</h3><div class="chart" id="chartRank" style="height:${Math.max(380,R.length*19)}px"></div></div>
+    <div class="card"><h3>排名详情（含仓库覆盖）</h3><table>${tbl}</table></div>`;
+  setTimeout(()=>{
+    const cols=R.map(x=>x.total>=9?'#2e7d32':x.total>=8?'#4472C4':x.total>=7?'#ED7D31':'#C00000');
+    Plotly.newPlot('chartRank',[{type:'bar',y:R.map(x=>x.name).reverse(),x:R.map(x=>x.total).reverse(),orientation:'h',marker:{color:cols.reverse()},text:R.map(x=>x.total.toFixed(1)).reverse(),textposition:'outside',textfont:{size:12}}],{xaxis:{range:[0,10.5],title:'综合评分'},margin:{t:10,l:180,r:50,b:30},shapes:[{type:'line',x0:avg,x1:avg,y0:-0.5,y1:R.length-0.5,line:{dash:'dash',color:'gray'}}],annotations:[{x:avg+0.1,y:R.length-1,text:'均线 '+avg.toFixed(1),showarrow:false,font:{color:'gray'},xanchor:'left'}]},{responsive:true});
   },200);
 })();
 
-//=== Tab2: 供应商详情 ===
+// ═══ Tab3: 供应商详情 ═══
 (function(){
-  let opts='';R.forEach((x,i)=>{opts+=`<option value="${i}">${x.rank}. ${x.name} (${x.total.toFixed(2)})</option>`;});
-  document.getElementById('tab2').innerHTML=`
-    <div style="margin-bottom:10px"><select id="supSelect" onchange="showSup()" style="padding:10px 16px;font-size:14px;border-radius:8px;border:2px solid #e0e0e0;width:100%;max-width:360px">${opts}</select></div>
-    <div id="supDetail"></div>`;
+  let opts='';R.forEach((x,i)=>{opts+=`<option value="${i}">${x.rank}. ${x.name} (${x.total.toFixed(1)}分) - ${x.region}</option>`;});
+  document.getElementById('tab3').innerHTML=`<div style="margin-bottom:10px"><select id="supSelect" onchange="showSup()" style="padding:10px 16px;font-size:14px;border-radius:8px;border:2px solid #e0e0e0;width:100%;max-width:400px">${opts}</select></div><div id="supDetail"></div>`;
   showSup();
 })();
 function showSup(){
-  const i=parseInt(document.getElementById('supSelect').value), x=R[i];
-  
-  // 优势汇总
-  let goodHtml='';
-  if(x.hasGood){
-    const goodSet=new Set(x.good.map(g=>g.replace(/^\d+[、.]\s*/,'').trim()).filter(g=>g&&!g.includes('供应商不足')));
-    goodHtml='<div class="good">'+[...goodSet].map(g=>'✅ '+g).join('<br>')+'</div>';
-  }
-  
-  // 待改善汇总
-  let badHtml='';
-  if(x.hasBad){
-    const badSet=new Set(x.bad.map(b=>b.replace(/^\d+[、.]\s*/,'').trim()).filter(b=>b&&!b.includes('供应商不足')&&!b.includes('需要优化的')));
-    badHtml='<div class="bad">'+[...badSet].slice(0,10).map(b=>'⚠️ '+b).join('<br>')+'</div>';
-  }
-  
-  // 资源池标签
-  let poolTags='';
-  if(x.pool){
-    x.pool.split('\n').forEach(p=>{
-      const clean=p.replace(/^\s*\|\s*/,'').trim();
-      if(clean) poolTags+=`<span class="pool-tag">${clean}</span> `;
-    });
-  }
-  
+  const i=parseInt(document.getElementById('supSelect').value),x=R[i],w=WAREHOUSES[x.name]||[];
+  let whHtml=w.map(l=>`<span class="wh-tag" style="font-size:12px;padding:3px 8px;margin:2px">📍 ${l.label}</span>`).join(' ')||'暂无仓库数据';
+  let poolHtml=(x.pool||'').split('\n').map(p=>p.replace(/^\s*\|\s*/,'').trim()).filter(Boolean).map(p=>`<span class="pool-tag" style="font-size:12px;padding:3px 8px;margin:2px">${p}</span>`).join(' ')||'—';
+  let goodSet=new Set((x.good||[]).map(g=>g.replace(/^\d+[、.]\s*/,'').trim()).filter(g=>g&&!g.includes('供应商不足')));
+  let badSet=new Set((x.bad||[]).map(b=>b.replace(/^\d+[、.]\s*/,'').trim()).filter(b=>b&&!b.includes('供应商不足')&&!b.includes('需要优化的')));
   document.getElementById('supDetail').innerHTML=`
-    <div class="stats"><div class="stat"><div class="val ${x.scoreClass}">${x.total.toFixed(2)}</div><div class="lbl">均分</div></div><div class="stat"><div class="val">${x.people}</div><div class="lbl">评分人数</div></div><div class="stat"><div class="val">${x.zg_n}</div><div class="lbl">整柜组</div></div><div class="stat"><div class="val">${x.gh_n}</div><div class="lbl">散货组</div></div><div class="stat"><div class="val">${x.region}</div><div class="lbl">区域</div></div><div class="stat"><div class="val">${x.biz_type}</div><div class="lbl">类型</div></div></div>
-    <div class="card"><h3>基本信息</h3>
-      <table><tr><td style="text-align:left;width:100px;font-weight:600">合作状态</td><td style="text-align:left">${x.coop||'—'}</td><td style="text-align:left;width:100px;font-weight:600">评分组别</td><td style="text-align:left">${x.groupLabel}</td></tr>
-      <tr><td style="text-align:left;font-weight:600">资源池</td><td colspan="3" style="text-align:left">${poolTags||'—'}</td></tr>
-      <tr><td style="text-align:left;font-weight:600">业务详情</td><td colspan="3" style="text-align:left;font-size:11px">${(x.detail||'—').replace(/\n/g,'<br>')}</td></tr>
-      ${x.history?'<tr><td style="text-align:left;font-weight:600">历史评估</td><td colspan="3" style="text-align:left;font-size:11px">'+x.history.replace(/\n/g,'<br>')+'</td></tr>':''}
-      ${x.contract?'<tr><td style="text-align:left;font-weight:600">合同状态</td><td colspan="3" style="text-align:left">'+x.contract+'</td></tr>':''}
-      </table>
-    </div>
-    ${goodHtml||badHtml?`<div class="grid2">
-      ${x.hasGood?`<div class="card"><h3>✅ 操作优势</h3>${goodHtml}</div>`:''}
-      ${x.hasBad?`<div class="card"><h3>⚠️ 待改善</h3>${badHtml}</div>`:''}
+    <div class="stats"><div class="stat"><div class="val ${x.sc}">${x.total.toFixed(1)}</div><div class="lbl">均分</div></div><div class="stat"><div class="val">${x.people}</div><div class="lbl">评分人数</div></div><div class="stat"><div class="val">${x.region}</div><div class="lbl">区域</div></div><div class="stat"><div class="val">${x.biz_type}</div><div class="lbl">业务类型</div></div><div class="stat"><div class="val">${x.coop||'—'}</div><div class="lbl">合作状态</div></div></div>
+    <div class="card"><h3>仓库/覆盖</h3><div style="margin:8px 0">${whHtml}</div></div>
+    <div class="card"><h3>资源池 / 业务详情</h3><div style="margin:8px 0">${poolHtml}</div><p style="font-size:11px;color:#666;margin-top:6px">${(x.detail||'—').replace(/\n/g,'<br>')}</p>
+    ${x.history?`<p style="font-size:11px;color:#888;margin-top:4px"><b>历史评估：</b>${x.history.replace(/\n/g,'<br>')}</p>`:''}
+    ${x.contract?`<p style="font-size:11px;color:#888;margin-top:4px"><b>合同：</b>${x.contract}</p>`:''}</div>
+    ${goodSet.size||badSet.size?`<div class="grid2">
+      ${goodSet.size?`<div class="card"><h3>✅ 操作优势 (${goodSet.size}项)</h3><div class="good">${[...goodSet].slice(0,15).map(g=>'✅ '+g).join('<br>')}</div></div>`:''}
+      ${badSet.size?`<div class="card"><h3>⚠️ 待改善 (${badSet.size}项)</h3><div class="bad">${[...badSet].slice(0,12).map(b=>'⚠️ '+b).join('<br>')}</div></div>`:''}
     </div>`:''}`;
 }
 
-//=== Tab3: 综合评估 ===
+// ═══ Tab4: 综合评估 ═══
 (function(){
-  document.getElementById('tab3').innerHTML=`
+  document.getElementById('tab4').innerHTML=`
     <div style="margin-bottom:10px">
-      <button class="filter-btn on" onclick="filter3('全部',this)">全部</button>
-      <button class="filter-btn" onclick="filter3('美国',this)">美国</button>
-      <button class="filter-btn" onclick="filter3('英国',this)">英国</button>
-      <button class="filter-btn" onclick="filter3('加拿大',this)">加拿大</button>
+      <button class="filter-btn on" onclick="filter4('全部',this)">全部</button>
+      <button class="filter-btn" onclick="filter4('美国',this)">美国</button>
+      <button class="filter-btn" onclick="filter4('英国',this)">英国</button>
+      <button class="filter-btn" onclick="filter4('加拿大',this)">加拿大</button>
     </div>
-    <div class="card"><div id="tab3Table"></div></div>`;
-  filter3('全部',document.querySelector('.filter-btn'));
+    <div class="card"><div id="tab4Table"></div></div>`;
+  filter4('全部',document.querySelector('.filter-btn'));
 })();
-function filter3(region,btn){
+function filter4(region,btn){
   document.querySelectorAll('.filter-btn').forEach(b=>{b.classList.remove('on');b.style.background='#fff';b.style.color='#333';});
   btn.classList.add('on');btn.style.background='#4472C4';btn.style.color='#fff';
   const list=region==='全部'?R:R.filter(x=>x.region===region);
-  
-  // 统计高频关键词
-  const countKeywords=arr=>{
-    const kw={};
-    (arr||[]).forEach(s=>{
-      const clean=s.replace(/^\d+[、.]\s*/,'').trim();
-      if(clean&&!clean.includes('供应商不足')&&!clean.includes('需要优化的')){
-        const short=clean.substring(0,8);
-        kw[short]=(kw[short]||0)+1;
-      }
-    });
-    return Object.entries(kw).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,v])=>k+v+'次').join('；')||'—';
-  };
-  
-  let t='<table><tr><th>供应商</th><th>区域</th><th>类型</th><th>均分</th><th>人数</th><th>组别</th><th>资源池</th><th>核心优势(高频)</th><th>关键问题(高频)</th></tr>';
+  const kw=(arr,n=5)=>{const m={};(arr||[]).forEach(s=>{const c=s.replace(/^\d+[、.]\s*/,'').trim();if(c&&!c.includes('供应商不足')&&!c.includes('需要优化的')){const k=c.substring(0,3);m[k]=(m[k]||0)+1;}});return Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,n).map(([k,v])=>k+'×'+v).join('<br>')||'—';};
+  let t='<table><tr><th>#</th><th>供应商</th><th>区域</th><th>类型</th><th>均分</th><th>合作</th><th>仓库覆盖</th><th>核心优势(Top5)</th><th>关键问题(Top5)</th></tr>';
   list.forEach(x=>{
-    t+=`<tr><td style="text-align:left;font-weight:600">${x.name}</td><td>${x.region}</td><td>${x.biz_type}</td><td class="${x.scoreClass}">${x.total.toFixed(2)}</td><td>${x.people}</td><td>${x.groupLabel}</td>
-    <td style="font-size:10px;text-align:left">${(x.pool||'—').replace(/\n/g,' ').substring(0,40)}</td>
-    <td style="font-size:10px;text-align:left;color:#2e7d32">${countKeywords(x.good)}</td>
-    <td style="font-size:10px;text-align:left;color:#c62828">${countKeywords(x.bad)}</td></tr>`;
+    const w=WAREHOUSES[x.name]||[];
+    t+=`<tr><td>${x.rank}</td><td style="text-align:left;font-weight:600">${x.name}</td><td>${x.region}</td><td>${x.biz_type}</td><td class="${x.sc}">${x.total.toFixed(1)}</td><td>${x.coop||'—'}</td>
+    <td style="font-size:10px">${w.map(l=>l.label).join('<br>')||'—'}</td>
+    <td style="font-size:10px;text-align:left;color:#2e7d32">${kw(x.good)}</td>
+    <td style="font-size:10px;text-align:left;color:#c62828">${kw(x.bad)}</td></tr>`;
   });
-  document.getElementById('tab3Table').innerHTML=t+'</table>';
+  document.getElementById('tab4Table').innerHTML=t+'</table>';
 }
 </script>
 </body>
