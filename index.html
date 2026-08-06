@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026H1 后段供应商考核报告</title>
+<script src="https://cdn.jsdelivr.net/npm/plotly.js@2.32.0/dist/plotly.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f7fa;color:#333}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+h1{font-size:24px;margin-bottom:5px}
+.subtitle{color:#888;font-size:13px;margin-bottom:20px}
+.tabs{display:flex;gap:8px;margin-bottom:20px;background:#fff;padding:6px;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);flex-wrap:wrap}
+.tab-btn{padding:10px 14px;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;background:transparent;color:#666;transition:all .2s}
+.tab-btn:hover{background:#f0f2f5}
+.tab-btn.active{background:#4472C4;color:#fff}
+.tab-content{display:none;animation:fadeIn .3s}
+.tab-content.active{display:block}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.card{background:#fff;border-radius:10px;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.card h3{font-size:17px;margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{padding:7px 10px;text-align:center;border-bottom:1px solid #eee}
+th{background:#f8f9fb;font-weight:600;color:#555;font-size:11px}
+tr:hover{background:#f8f9fb}
+.chart{width:100%}
+.caption{color:#888;font-size:12px;margin-top:8px}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.stat{background:#f8f9fb;padding:10px 18px;border-radius:8px;text-align:center;min-width:80px}
+.stat .val{font-size:24px;font-weight:700;color:#4472C4}
+.stat .lbl{font-size:11px;color:#888}
+.stat.warn .val{color:#c62828}
+.stat.good .val{color:#2e7d32}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr}}
+.footer{text-align:center;color:#aaa;font-size:12px;padding:20px}
+.score-hi{color:#2e7d32;font-weight:700}
+.score-md{color:#e65100;font-weight:700}
+.score-lo{color:#c62828;font-weight:700}
+.group-header{background:#e8eaf6!important;font-weight:700!important;font-size:13px!important;color:#283593!important}
+.sub-header{background:#f5f5f5!important;color:#666!important;font-size:11px!important}
+.biz-icon{font-size:14px;margin-right:2px}
+.region-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;margin:1px}
+.region-west{background:#E3F2FD;color:#1565C0}
+.region-mid{background:#FFF3E0;color:#E65100}
+.region-gulf{background:#FCE4EC;color:#C62828}
+.region-east{background:#E8F5E9;color:#2E7D32}
+.region-all{background:#F3E5F5;color:#7B1FA2}
+.intro-box{background:#fafafa;border-left:3px solid #4472C4;padding:10px 14px;margin:10px 0;font-size:13px;color:#555;line-height:1.8}
+.good{color:#2e7d32;font-size:12px;line-height:1.8}
+.bad{color:#c62828;font-size:12px;line-height:1.8}
+.formula-box{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:16px 20px;border-radius:10px;margin:14px 0;text-align:center}
+.formula-box b{font-size:15px}
+.formula-box .sub{font-size:11px;opacity:.85;margin-top:4px}
+.area-card{padding:8px 14px;border-radius:8px;text-align:center;font-size:13px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>📦 2026年上半年度 后段供应商考核报告</h1>
+<p class="subtitle" id="updateInfo"></p>
+<div class="tabs">
+<button class="tab-btn active" onclick="switchTab(0)">📐 评分体系</button>
+<button class="tab-btn" onclick="switchTab(1)">🗺️ 供应商地图</button>
+<button class="tab-btn" onclick="switchTab(2)">📊 排名总览</button>
+<button class="tab-btn" onclick="switchTab(3)">🔍 供应商详情</button>
+<button class="tab-btn" onclick="switchTab(4)">📈 数据分析</button>
+</div>
+<div class="tab-content active" id="tab0"></div>
+<div class="tab-content" id="tab1"></div>
+<div class="tab-content" id="tab2"></div>
+<div class="tab-content" id="tab3"></div>
+<div class="tab-content" id="tab4"></div>
+<div class="footer">2026上半年度·后段供应商考核报告·HANHAI</div>
+</div>
+<script src="report_data.js"></script>
+<script src="supplier_locations.js"></script>
+<script>
+const R=DATA.results.sort((a,b)=>b.total-a.total);
+R.forEach((x,i)=>{
+  x.rank=i+1;
+  x.sc=x.total>=9?'score-hi':x.total>=8?'score-md':'score-lo';
+  x.people=x.zg_n+x.gh_n;
+  // biz icon
+  if(x.biz_label==='整柜直送')x.icon='🚛';
+  else if(x.biz_label==='散货拆送')x.icon='📦';
+  else x.icon='📦+🚛';
+});
+const US=R.filter(x=>x.region==='美国'), GB=R.filter(x=>x.region==='英国'), CA=R.filter(x=>x.region==='加拿大');
+document.getElementById('updateInfo').textContent='数据更新：'+DATA.updated+' | 整柜组5人+港后组17人 | '+R.length+'家供应商';
+
+function switchTab(i){
+  document.querySelectorAll('.tab-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+  document.querySelectorAll('.tab-content').forEach((c,j)=>c.classList.toggle('active',j===i));
+  setTimeout(()=>Plotly.Plots.resize(document.querySelector('.tab-content.active')),200);
+}
+
+// ═══ Tab0: 评分体系 ═══
+(function(){
+  const rows=[
+    ['服务表现','65%','提柜及时性','15%','自营仓参考服务等级；非自盈仓码头可提后2工作日'],
+    ['','','拆柜及时性','15%','提柜后3工作日内完成'],
+    ['','','派送时效性','20%','拆柜+7天内完成交仓'],
+    ['','','还空时效性','15%','拆柜后或报空后2工作日内还'],
+    ['','','亚马逊预约能力','20%','预约派送在拆柜后7天内'],
+    ['','','异常率','15%','0起10分；2起8分；超过3起0分'],
+    ['工作配合度','15%','路由/POD更新','20%','送货完成最晚第二天提供POD'],
+    ['','','消息邮件回复','20%','飞书15分钟回复；邮件当天回'],
+    ['','','风险把控','20%','实时同步行情及突发情况'],
+    ['','','异常反馈方案','20%','主动反馈并提供合理方案'],
+    ['','','账单及时准确','20%','自营仓周四推送；非自营仓3工作日'],
+    ['总体成本','20%','成本承担增长','50%','共同承担异常/临时成本'],
+    ['','','报价稳定性','50%','固定报价≥1月有效'],
+  ];
+  let h=rows.map(r=>'<tr>'+r.map(c=>`<td style="font-size:11px;text-align:${r[0]?'left':''}">${c}</td>`).join('')+'</tr>').join('');
+  document.getElementById('tab0').innerHTML=`
+    <div class="card"><h3>考核目的</h3>
+      <p style="font-size:14px;line-height:2;color:#555">
+      为持续优化后段供应商合作质量，对<b>2026年1-6月</b>合作的供应商进行多维度绩效考核。<br>
+      覆盖<b>美国、加拿大、英国</b>三个国家，业务类型涵盖<b>整柜直送、散货拆送、综合服务</b>。
+      </p>
+      <div class="formula-box">
+        <b>总评分 = 服务表现 × 65% + 工作配合度 × 15% + 总体成本 × 20%</b>
+        <div class="sub">13项考核指标 · 1-10分制 · 「/」表示该评分人不涉及此供应商</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="val">${R.length}</div><div class="lbl">考核供应商总数</div></div>
+      <div class="stat"><div class="val">${US.length}</div><div class="lbl">🇺🇸 美国</div></div>
+      <div class="stat"><div class="val">${GB.length}</div><div class="lbl">🇬🇧 英国</div></div>
+      <div class="stat"><div class="val">${CA.length}</div><div class="lbl">🇨🇦 加拿大</div></div>
+    </div>
+    <div class="card"><h3>评分维度详解</h3><table><tr><th>模块</th><th>权重</th><th>考核项</th><th>项权重</th><th>考核标准</th></tr>${h}</table></div>
+  `;
+})();
+
+// ═══ Tab1: 供应商地图 ═══
+(function(){
+  const colors={'美西':'#1565C0','美中':'#E65100','美湾':'#C62828','美东':'#2E7D32','全美':'#7B1FA2','加拿大':'#00838F','英国':'#6A1B9A','未知':'#999'};
+  const traces=[], seen=new Set();
+  Object.entries(WAREHOUSES).forEach(([name,locs])=>{
+    const sup=R.find(x=>x.name===name);
+    if(!sup||locs.length===0)return;
+    const regions=sup.sub_regions||['未知'],c=colors[regions[0]]||'#999';
+    if(!seen.has(name)){
+      seen.add(name);
+      traces.push({
+        type:'scattergeo',lat:locs.map(l=>l.lat),lon:locs.map(l=>l.lon),
+        mode:'markers+text',text:locs.map(l=>l.label),textposition:'top center',textfont:{size:9,color:c},
+        marker:{size:10,color:c,line:{width:1,color:'#fff'}},
+        name:name+' · '+sup.biz_label,
+        hovertemplate:name+'<br>'+sup.biz_label+'<br>'+regions.join(' / ')+'<br>%{text}<extra></extra>'
+      });
+    }
+  });
+
+  // 子区域统计
+  const areaCnt={}; US.forEach(x=>{(x.sub_regions||[]).forEach(a=>{if(a!=='全美')areaCnt[a]=(areaCnt[a]||0)+1;});});
+  const areaOrder=['美西','美中','美湾','美东'];
+
+  document.getElementById('tab1').innerHTML=`
+    <div class="stats">
+      <div class="stat"><div class="val">${R.length}</div><div class="lbl">供应商总数</div></div>
+      <div class="stat"><div class="val">${US.length}</div><div class="lbl">🇺🇸 美国</div></div>
+      <div class="stat"><div class="val">${GB.length}</div><div class="lbl">🇬🇧 英国</div></div>
+      <div class="stat"><div class="val">${CA.length}</div><div class="lbl">🇨🇦 加拿大</div></div>
+      ${areaOrder.map(a=>`<div class="stat"><div class="val">${areaCnt[a]||0}</div><div class="lbl">${a}</div></div>`).join('')}
+    </div>
+    <div class="card"><h3>全球供应商分布</h3><p class="caption">标记颜色对应区域，每点=一个仓库位置</p><div class="chart" id="chartMap" style="height:450px"></div></div>
+    <div class="card"><h3>美国供应商子区域分布</h3><div class="chart" id="chartPie" style="height:300px"></div></div>`;
+  setTimeout(()=>{
+    Plotly.newPlot('chartMap',traces,{geo:{scope:'world',showland:true,landcolor:'#f8f8f8',showocean:true,oceancolor:'#e8f0fe',showcountries:true,countrycolor:'#ddd',showframe:false,projection:{type:'natural earth'},center:{lat:40,lon:-95},lonaxis:{range:[-130,-65]},lataxis:{range:[25,56]}},showlegend:true,legend:{x:1,y:1,font:{size:9}},margin:{t:10,l:10,r:10,b:10}},{responsive:true});
+    Plotly.newPlot('chartPie',[{type:'pie',labels:areaOrder,values:areaOrder.map(a=>areaCnt[a]||0),marker:{colors:['#1565C0','#E65100','#C62828','#2E7D32']},textinfo:'label+value+percent',hole:.3}],{title:'美国供应商子区域分布',margin:{t:30}},{responsive:true});
+  },300);
+})();
+
+// ═══ Tab2: 排名总览 ═══
+(function(){
+  const areas=['美西','美中','美湾','美东'];
+  const regionClass={'美西':'region-west','美中':'region-mid','美湾':'region-gulf','美东':'region-east'};
+
+  function makeGroup(label,list){
+    let rows='<tr class="group-header"><td colspan="6">'+label+' ('+list.length+'家)</td></tr>';
+    list.forEach(x=>{
+      const regions=(x.sub_regions||[]).filter(r=>r!=='全美');
+      const regionTags=regions.map(r=>`<span class="region-tag ${regionClass[r]||''}">${r}</span>`).join(' ');
+      const avg=R.reduce((s,r)=>s+r.total,0)/R.length;
+      rows+=`<tr>
+        <td style="width:30px">${x.rank}</td>
+        <td style="text-align:left;font-weight:600">${x.name}${x.people<3?' 🔺':''}</td>
+        <td>${regionTags||'—'}</td>
+        <td>${x.icon} ${x.biz_label}</td>
+        <td class="${x.sc}">${x.total.toFixed(1)}</td>
+        <td style="font-size:10px;color:#888">${x.people}人评</td>
+      </tr>`;
+    });
+    return rows;
+  }
+
+  // US 内部排序 + 子表头
+  let usRows='<tr class="group-header"><td colspan="6">🇺🇸 美国 ('+US.length+'家)  均分 '+(US.reduce((s,x)=>s+x.total,0)/US.length).toFixed(1)+'</td></tr>';
+  // 按子区域分组
+  areas.forEach(area=>{
+    const list=US.filter(x=>(x.sub_regions||[]).includes(area));
+    if(list.length===0)return;
+    list.sort((a,b)=>b.total-a.total);
+    usRows+=makeGroup('　├ '+area,list);
+  });
+  // 全美 / 未分类
+  const uncat=US.filter(x=>(x.sub_regions||[]).includes('全美')||(x.sub_regions||[]).includes('未知'));
+  if(uncat.length)usRows+=makeGroup('　├ 全美/未分类',uncat.sort((a,b)=>b.total-a.total));
+
+  const gbRows=makeGroup('🇬🇧 英国',GB.sort((a,b)=>b.total-a.total));
+  const caRows=makeGroup('🇨🇦 加拿大',CA.sort((a,b)=>b.total-a.total));
+
+  document.getElementById('tab2').innerHTML=`
+    <div class="card"><h3>综合评分排名（按国家/区域分组）</h3>
+      <p class="caption">🔺 样本<3人 ｜ 均线='+(R.reduce((s,x)=>s+x.total,0)/R.length).toFixed(1)+'分</p>
+      <table><tr><th style="width:30px">#</th><th>供应商</th><th>区域</th><th>类型</th><th>均分</th><th style="width:60px">人数</th></tr>
+      ${usRows}${caRows}${gbRows}
+      </table>
+    </div>`;
+})();
+
+// ═══ Tab3: 供应商详情 ═══
+(function(){
+  let opts=''; R.forEach((x,i)=>{opts+=`<option value="${i}">${x.rank}. ${x.name} (${x.total.toFixed(1)}) — ${x.region}</option>`;});
+  document.getElementById('tab3').innerHTML=`<div style="margin-bottom:10px"><select id="supSelect" onchange="showSup()" style="padding:10px 16px;font-size:14px;border-radius:8px;border:2px solid #e0e0e0;width:100%;max-width:420px">${opts}</select></div><div id="supDetail"></div>`;
+  showSup();
+})();
+function showSup(){
+  const i=parseInt(document.getElementById('supSelect').value),x=R[i],w=WAREHOUSES[x.name]||[];
+  const regions=(x.sub_regions||[]).filter(r=>r!=='全美');
+  const regionTags=regions.map(r=>{
+    const cls={'美西':'region-west','美中':'region-mid','美湾':'region-gulf','美东':'region-east'};
+    return `<span class="region-tag ${cls[r]||''}" style="font-size:12px;padding:3px 8px">${r}</span>`;
+  }).join(' ');
+  const whHtml=w.length?w.map(l=>`<span class="region-tag" style="font-size:11px;padding:3px 8px;margin:2px;background:#E8F5E9;color:#2E7D32">📍 ${l.label}</span>`).join(' '):'暂无仓库数据';
+  const poolHtml=(x.pool||'').split('\n').map(p=>p.replace(/^\s*\|\s*/,'').trim()).filter(Boolean).map(p=>`<span class="region-tag" style="font-size:11px;padding:3px 8px;margin:2px">${p}</span>`).join(' ')||'—';
+  const goodSet=new Set((x.good||[]).map(g=>g.replace(/^\d+[、.]\s*/,'').trim()).filter(g=>g&&!g.includes('供应商不足')));
+  const badSet=new Set((x.bad||[]).map(b=>b.replace(/^\d+[、.]\s*/,'').trim()).filter(b=>b&&!b.includes('供应商不足')&&!b.includes('需要优化的')));
+  document.getElementById('supDetail').innerHTML=`
+    <div class="stats"><div class="stat"><div class="val ${x.sc}">${x.total.toFixed(1)}</div><div class="lbl">综合均分</div></div><div class="stat"><div class="val">${x.region}</div><div class="lbl">国家</div></div><div class="stat"><div class="val">${x.icon} ${x.biz_label}</div><div class="lbl">业务类型</div></div><div class="stat"><div class="val">${x.people}</div><div class="lbl">评分人数</div></div></div>
+    ${x.intro?`<div class="card"><h3>公司介绍</h3><div class="intro-box">${x.intro}</div></div>`:''}
+    <div class="grid2">
+      <div class="card"><h3>仓库 / 覆盖</h3><div style="margin:8px 0">${whHtml}</div></div>
+      <div class="card"><h3>服务区域</h3><div style="margin:8px 0">${regionTags||'—'}</div></div>
+    </div>
+    <div class="card"><h3>资源池 / 业务详情</h3><div style="margin:8px 0">${poolHtml}</div>
+      ${x.detail?`<p style="font-size:11px;color:#666;margin-top:6px">${x.detail.replace(/\n/g,'<br>')}</p>`:''}
+      ${x.history?`<p style="font-size:11px;color:#888;margin-top:4px"><b>历史评估：</b>${x.history.replace(/\n/g,'<br>')}</p>`:''}
+      ${x.contract?`<p style="font-size:11px;color:#888;margin-top:4px"><b>合同：</b>${x.contract}</p>`:''}
+    </div>
+    ${goodSet.size||badSet.size?`<div class="grid2">
+      ${goodSet.size?`<div class="card"><h3>✅ 操作优势</h3><div class="good">${[...goodSet].slice(0,12).map(g=>'✅ '+g).join('<br>')}</div></div>`:''}
+      ${badSet.size?`<div class="card"><h3>⚠️ 待改善</h3><div class="bad">${[...badSet].slice(0,12).map(b=>'⚠️ '+b).join('<br>')}</div></div>`:''}
+    </div>`:''}`;
+}
+
+// ═══ Tab4: 数据分析 ═══
+(function(){
+  const areas=['美西','美中','美湾','美东'];
+  const areaCnt={};US.forEach(x=>{(x.sub_regions||[]).forEach(a=>{if(a!=='全美')areaCnt[a]=(areaCnt[a]||0)+1;});});
+  const areaScore={};US.forEach(x=>{(x.sub_regions||[]).forEach(a=>{if(!areaScore[a])areaScore[a]=[];areaScore[a].push(x.total);});});
+  const areaAvg={};Object.entries(areaScore).forEach(([k,v])=>{areaAvg[k]=(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1);});
+
+  const bizCnt={};R.forEach(x=>{bizCnt[x.biz_label]=(bizCnt[x.biz_label]||0)+1;});
+  const bizScore={};R.forEach(x=>{if(!bizScore[x.biz_label])bizScore[x.biz_label]=[];bizScore[x.biz_label].push(x.total);});
+  const bizAvg={};Object.entries(bizScore).forEach(([k,v])=>{bizAvg[k]=(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1);});
+
+  document.getElementById('tab4').innerHTML=`
+    <div class="grid2">
+      <div class="card"><h3>美国子区域分布</h3><div class="chart" id="chartPieArea" style="height:280px"></div></div>
+      <div class="card"><h3>各区域均分对比</h3><div class="chart" id="chartAreaScore" style="height:280px"></div></div>
+    </div>
+    <div class="grid2">
+      <div class="card"><h3>业务类型分布</h3><div class="chart" id="chartBizPie" style="height:280px"></div></div>
+      <div class="card"><h3>各类型均分对比</h3><div class="chart" id="chartBizScore" style="height:280px"></div></div>
+    </div>
+    <div class="card"><h3>供应商评分分布</h3><div class="chart" id="chartDist" style="height:250px"></div></div>`;
+  setTimeout(()=>{
+    Plotly.newPlot('chartPieArea',[{type:'pie',labels:areas,values:areas.map(a=>areaCnt[a]||0),marker:{colors:['#1565C0','#E65100','#C62828','#2E7D32']},textinfo:'label+value',hole:.4}],{margin:{t:20}},{responsive:true});
+    Plotly.newPlot('chartAreaScore',[{type:'bar',x:areas,y:areas.map(a=>parseFloat(areaAvg[a]||0)),marker:{color:['#1565C0','#E65100','#C62828','#2E7D32']},text:areas.map(a=>areaAvg[a]||''),textposition:'outside'}],{yaxis:{range:[0,10],title:'均分'},margin:{t:10,b:40}},{responsive:true});
+    const bizOrder=['整柜直送','散货拆送','综合服务'];
+    Plotly.newPlot('chartBizPie',[{type:'pie',labels:bizOrder,values:bizOrder.map(b=>bizCnt[b]||0),marker:{colors:['#4472C4','#ED7D31','#70AD47']},textinfo:'label+value',hole:.4}],{margin:{t:20}},{responsive:true});
+    Plotly.newPlot('chartBizScore',[{type:'bar',x:bizOrder,y:bizOrder.map(b=>parseFloat(bizAvg[b]||0)),marker:{color:['#4472C4','#ED7D31','#70AD47']},text:bizOrder.map(b=>bizAvg[b]||''),textposition:'outside'}],{yaxis:{range:[0,10],title:'均分'},margin:{t:10,b:40}},{responsive:true});
+    Plotly.newPlot('chartDist',[{type:'histogram',x:R.map(x=>x.total),marker:{color:'#4472C4'},xbins:{start:5,end:10,size:0.5}}],{xaxis:{title:'综合评分',range:[4.5,10.5]},yaxis:{title:'供应商数',dtick:1},margin:{t:10}},{responsive:true});
+  },300);
+})();
+</script>
+</body>
+</html>
