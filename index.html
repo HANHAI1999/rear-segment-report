@@ -3,177 +3,130 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>2026H1 后段供应商考核报告</title>
-<script src="https://unpkg.com/plotly.js@2.32.0/dist/plotly.min.js"></script>
+<script src="plotly.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f7fa;color:#333}
-.container{max-width:1200px;margin:0 auto;padding:20px}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#333}
+.ct{max-width:1200px;margin:0 auto;padding:20px}
 h1{font-size:24px;margin-bottom:5px}
-.subtitle{color:#888;font-size:13px;margin-bottom:20px}
-.tabs{display:flex;gap:8px;margin-bottom:20px;background:#fff;padding:6px;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);flex-wrap:wrap}
-.tab-btn{padding:10px 14px;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;background:transparent;color:#666;transition:all .2s}
-.tab-btn:hover{background:#f0f2f5}
-.tab-btn.active{background:#4472C4;color:#fff}
-.tab-content{display:none;animation:fadeIn .3s}
-.tab-content.active{display:block}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.card{background:#fff;border-radius:10px;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-.card h3{font-size:17px;margin-bottom:12px}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th,td{padding:7px 10px;text-align:center;border-bottom:1px solid #eee}
-th{background:#f8f9fb;font-weight:600;color:#555;font-size:11px}
-tr:hover{background:#f8f9fb}
-.chart{width:100%}
-.caption{color:#888;font-size:12px;margin-top:8px}
-.stats-row{display:flex;gap:0;width:100%;margin-bottom:14px;border-radius:10px;overflow:hidden}
-.stat-card{flex:1;background:#f8f9fb;padding:14px 10px;text-align:center;border-right:1px solid #e8e8e8}
-.stat-card:last-child{border-right:none}
-.stat-card .val{font-size:28px;font-weight:700}
-.stat-card .lbl{font-size:11px;color:#888;margin-top:2px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:800px){.grid2{grid-template-columns:1fr}}
-.btn{padding:6px 14px;border:1px solid #ddd;border-radius:20px;cursor:pointer;font-size:12px;background:#fff;margin:0 4px 4px 0;transition:all .2s}
-.btn.on{background:#4472C4;color:#fff;border-color:#4472C4}
-.footer{text-align:center;color:#aaa;font-size:12px;padding:20px}
+.st{color:#888;font-size:13px;margin-bottom:20px}
+.nav{display:flex;gap:8px;margin-bottom:20px;background:#fff;padding:6px;border-radius:10px}
+.nb{flex:1;padding:10px;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;background:transparent;color:#666}
+.nb.on{background:#4472C4;color:#fff}
+.tc{display:none}
+.tc.on{display:block}
+.cd{background:#fff;border-radius:10px;padding:24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:10px 12px;text-align:center;border-bottom:1px solid #eee}
+th{background:#f8f9fb;font-weight:600;color:#555}
+.fm{background:#e8f5e9;color:#2e7d32;padding:16px;border-radius:8px;font-size:14px;font-weight:600;text-align:center;margin-bottom:16px}
+
+.ch{width:100%}
 .sh{color:#2e7d32;font-weight:700}.sm{color:#e65100;font-weight:700}.sl{color:#c62828;font-weight:700}
-.grp td{background:#e8eaf6!important;font-weight:700!important;font-size:13px!important;color:#283593!important;padding:8px 10px!important}
-.biz{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600}
-.biz-s{background:#FFF3E0;color:#E65100}.biz-z{background:#E3F2FD;color:#1565C0}.biz-h{background:#E8F5E9;color:#2E7D32}
-.good{color:#2e7d32;font-size:12px;line-height:1.8}
-.bad{color:#c62828;font-size:12px;line-height:1.8}
+.pil{padding:6px 14px;border:1px solid #e0e0e0;border-radius:14px;cursor:pointer;font-size:12px;font-weight:500;background:#fff;color:#888;margin:0 3px 6px 0;transition:.15s;white-space:nowrap}
+.pil:hover{border-color:#4472C4;color:#4472C4}
+.pil.on{border-color:#4472C4;background:#4472C4;color:#fff}
+.fl{font-size:11px;color:#999}
+.bt{font-size:11px;font-weight:600}.bts{color:#E65100}.btz{color:#1565C0}.bth{color:#2E7D32}
+.mt{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px}
+.mc{background:#f8f9fb;padding:16px;border-radius:8px;text-align:center}
+.mv{font-size:28px;font-weight:700;color:#4472C4}
+.ml{font-size:12px;color:#888;margin-top:4px}
+.gd{color:#2e7d32;font-size:12px;line-height:1.8}
+.bd{color:#c62828;font-size:12px;line-height:1.8}
+.nav{box-shadow:0 1px 3px rgba(0,0,0,.08)}
+
 </style>
 </head>
 <body>
-<div class="container">
-<h1>📦 2026年上半年度 后段供应商考核报告</h1>
-<p class="subtitle" id="updateInfo"></p>
-<div class="tabs">
-<button class="tab-btn active" onclick="switchTab(0)">📐 评分体系</button>
-<button class="tab-btn" onclick="switchTab(1)">🗺️ 供应商分布</button>
-<button class="tab-btn" onclick="switchTab(2)">📊 排名总览</button>
-<button class="tab-btn" onclick="switchTab(3)">🔍 供应商详情</button>
-<button class="tab-btn" onclick="switchTab(4)">📈 区域对比</button>
+<div id="pwOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#f5f7fa;z-index:9999;display:flex;align-items:center;justify-content:center">
+<div style="background:#fff;padding:40px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.15);text-align:center;max-width:400px">
+<h2 style="margin-bottom:8px">2026H1 后段供应商考核报告</h2>
+<p style="color:#888;margin-bottom:20px;font-size:14px">内部资料，请输入密码查看</p>
+<input id="pwInput" type="password" placeholder="请输入访问密码" style="width:100%;padding:12px 16px;font-size:16px;border:2px solid #e0e0e0;border-radius:8px;text-align:center;margin-bottom:12px" onkeydown="if(event.key==='Enter')checkPW()">
+<button onclick="checkPW()" style="width:100%;padding:12px;font-size:16px;font-weight:600;background:#4472C4;color:#fff;border:none;border-radius:8px;cursor:pointer">确认</button>
+<p id="pwError" style="color:#c62828;font-size:13px;margin-top:10px;display:none">密码错误，请重试</p>
 </div>
-<div class="tab-content active" id="tab0"></div>
-<div class="tab-content" id="tab1"></div>
-<div class="tab-content" id="tab2"></div>
-<div class="tab-content" id="tab3"></div>
-<div class="tab-content" id="tab4"></div>
-<div class="footer">2026上半年度·后段供应商考核报告·HANHAI</div>
 </div>
-<script src="report_data.js"></script>
-<script src="supplier_locations.js"></script>
 <script>
-// ═══ 全局 ═══
-const R=DATA.results.sort((a,b)=>b.total-a.total);
-R.forEach((x,i)=>{
-  x.rank=i+1; x.sc=x.total>=9?'sh':x.total>=8?'sm':'sl'; x.people=x.zg_n+x.gh_n;
-  const bl=x.biz_label||'';
-  if(bl.includes('散货')&&bl.includes('整柜'))x.btag='<span class="biz biz-h">散货+整柜</span>';
-  else if(bl.includes('散货')||bl.includes('拆送'))x.btag='<span class="biz biz-s">散货</span>';
-  else if(bl.includes('整柜')||bl.includes('直送'))x.btag='<span class="biz biz-z">整柜</span>';
-  else x.btag='<span class="biz biz-h">散货+整柜</span>';
-});
-const US=R.filter(x=>x.region==='美国'),GB=R.filter(x=>x.region==='英国'),CA=R.filter(x=>x.region==='加拿大');
-const ac={'美西':'#1565C0','美中':'#E65100','美湾':'#C62828','美东':'#2E7D32','全美':'#7B1FA2'},ao=['美西','美中','美湾','美东'];
-document.getElementById('updateInfo').textContent='数据更新：'+DATA.updated+' | 整柜操作组5人+港后操作组17人 | '+R.length+'家供应商';
+function checkPW(){var p=document.getElementById("pwInput").value;if(p==="94c2bc45"){document.getElementById("pwOverlay").style.display="none";}else{document.getElementById("pwError").style.display="block";}}
+</script>
+<div class="ct">
+<h1>2026年上半年度 后段供应商考核报告</h1>
+<p class="st">数据更新：2026-08-06 | 24家供应商</p>
+<div class="nav">
+<button class="nb on" id="nav0">评分体系</button>
+<button class="nb" id="nav1">排名总览</button>
+<button class="nb" id="nav2">区域对比</button>
+<button class="nb" id="nav3">供应商详情</button>
+</div>
 
-function switchTab(i){
-  document.querySelectorAll('.tab-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
-  document.querySelectorAll('.tab-content').forEach((c,j)=>c.classList.toggle('active',j===i));
-  setTimeout(()=>Plotly.Plots.resize(document.querySelector('.tab-content.active')),200);
-}
+<div class="tc on" id="t0">
+<div class="cd"><h3>考核评分体系</h3>
+<div class="fm">总评分 = 服务表现(65%) + 服务意识·工作配合度(15%) + 总体成本(20%)</div>
+<table>
+<tr><th>考核模块</th><th>模块权重</th><th>考核项</th><th>单项权重</th><th>评分标准</th></tr>
+<tr><td rowspan="6" style="background:#D6E4F0;font-weight:700">服务表现</td><td rowspan="6" style="background:#D6E4F0;font-weight:700">65%</td><td>提柜及时性</td><td>15%</td><td style="text-align:left;font-size:11px">自营仓：参考服务等级；非自盈仓：码头可提后2个工作日（LFD前提完）</td></tr>
+<tr><td>拆柜及时性</td><td>15%</td><td style="text-align:left;font-size:11px">提柜后3个工作日内完成</td></tr>
+<tr><td>派送时效性</td><td>20%</td><td style="text-align:left;font-size:11px">拆柜+7天内完成交仓</td></tr>
+<tr><td>还空时效性</td><td>15%</td><td style="text-align:left;font-size:11px">拆柜后或报空后2个工作日内</td></tr>
+<tr><td>亚马逊预约能力</td><td>20%</td><td style="text-align:left;font-size:11px">预约派送在拆柜后7天内完成</td></tr>
+<tr><td>异常率</td><td>15%</td><td style="text-align:left;font-size:11px">0起：10分；2起：8分；>3起：0分</td></tr>
+<tr><td rowspan="5" style="background:#D9EDDF;font-weight:700">服务意识<br>（工作配合度）</td><td rowspan="5" style="background:#D9EDDF;font-weight:700">15%</td><td>路由（含POD）更新及时性+准确性</td><td>20%</td><td style="text-align:left;font-size:11px">送货完成最晚第二天提供POD</td></tr>
+<tr><td>消息及邮件回复及时性</td><td>20%</td><td style="text-align:left;font-size:11px">飞书15分钟内响应；邮件当天内回复</td></tr>
+<tr><td>风险把控</td><td>20%</td><td style="text-align:left;font-size:11px">实时同步行情及突发情况</td></tr>
+<tr><td>异常主动反馈及解决方案（闭环能力）</td><td>20%</td><td style="text-align:left;font-size:11px">出现异常主动反馈并提供合理方案</td></tr>
+<tr><td>账单及时性+准确性</td><td>20%</td><td style="text-align:left;font-size:11px">自营仓：每周四前推送；非自营仓：3个工作日内</td></tr>
+<tr><td rowspan="2" style="background:#FFF2CC;font-weight:700">总体成本</td><td rowspan="2" style="background:#FFF2CC;font-weight:700">20%</td><td>共同承担成本的增长（如临时涨价），主动配合降价</td><td>50%</td><td style="text-align:left;font-size:11px">因仓位/派送被临时切割等意外成本共同承担</td></tr>
+<tr><td>报价稳定性和有效性</td><td>50%</td><td style="text-align:left;font-size:11px">固定报价有效期≥1个月</td></tr>
+</table></div>
+</div>
 
-// ═══  Tab0: 评分体系 ═══
-(function(){
-  const rows=[['服务表现','65%','提柜及时性','15%','自营仓：参考服务等级；非自盈仓：码头可提后2工作日（LFD前提完）'],['','','拆柜及时性','15%','提柜后3工作日完成'],['','','派送时效性','20%','拆柜+7天内完成交仓'],['','','还空时效性','15%','拆柜后/报空后2工作日内'],['','','亚马逊预约能力','20%','预约派送在拆柜后7天内'],['','','异常率','15%','0起：10分；2起：8分；>3起：0分'],['工作配合度','15%','路由/POD更新及时准确','20%','送货完成最晚第二天提供POD'],['','','消息/邮件回复及时性','20%','飞书15分钟内响应；邮件当天回复'],['','','风险把控','20%','实时同步行情及突发情况'],['','','异常反馈及解决方案','20%','主动反馈并提供合理方案'],['','','账单及时性+准确性','20%','自营仓：周四推送；非自营仓：3工作日内'],['总体成本','20%','共同承担成本的增长','50%','因仓位/派送被临时切割等意外成本共同承担'],['','','报价稳定性和有效性','50%','固定报价有效期为≥1个月']];
-  let h=rows.map(r=>'<tr>'+r.map(c=>`<td style="font-size:11px;text-align:${r[0]?'left;font-weight:600':''}">${c}</td>`).join('')+'</tr>').join('');
-  document.getElementById('tab0').innerHTML=`
-    <div class="stats-row"><div class="stat-card"><div class="val" style="color:#1565C0">${US.length}</div><div class="lbl">🇺🇸 美国</div></div><div class="stat-card"><div class="val" style="color:#00838F">${CA.length}</div><div class="lbl">🇨🇦 加拿大</div></div><div class="stat-card"><div class="val" style="color:#C62828">${GB.length}</div><div class="lbl">🇬🇧 英国</div></div></div>
-    <div class="card"><h3>评分模型</h3>
-      <div style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:16px 20px;border-radius:10px;text-align:center;margin-bottom:16px"><b style="font-size:15px">总评分 = 服务表现×65% + 工作配合度×15% + 总体成本×20%</b><div style="font-size:11px;opacity:.85;margin-top:4px">1-10分制 · "/"表示不涉及 · 不计入平均</div></div>
-      <table><tr><th>考核模块</th><th>模块权重</th><th>考核项</th><th>项权重</th><th>评分标准</th></tr>${h}</table></div>`;
-})();
+<div class="tc" id="t1"><div class="cd" id="rankFilter"></div><div class="cd" id="rankTable"></div><div class="cd"><h3>评分分布</h3><div class="ch" id="rankChart" style="height:500px"></div></div></div>
+<div class="tc" id="t2"><div class="cd"><h3>美国各区域供应商</h3><div style="display:flex;gap:14px;flex-wrap:wrap" id="regionTop"></div></div><div class="cd"><h3>区域对比图</h3><div style="display:flex;gap:14px"><div class="ch" id="cBox" style="flex:1;height:320px"></div><div class="ch" id="cPie" style="flex:1;height:320px"></div></div></div></div>
+<div class="tc" id="t3"><div class="cd" id="detailSelect"></div><div class="cd" id="detailContent"></div></div>
 
-// ═══  Tab1: 供应商分布 ═══
-(function(){
-  const traces=[];
-  Object.entries(WAREHOUSES).forEach(([name,locs])=>{
-    const sup=R.find(x=>x.name===name);
-    if(!sup||locs.length===0||sup.region!=='美国')return;
-    const sr=sup.sub_regions||['未知'],c=ac[sr[0]]||'#999';
-    traces.push({type:'scattergeo',lat:locs.map(l=>l.lat),lon:locs.map(l=>l.lon),mode:'markers+text',text:locs.map(l=>l.label),textposition:'top center',textfont:{size:9,color:c},marker:{size:10,color:c,line:{width:1,color:'#fff'}},name:name,hovertemplate:name+'<br>'+sr.join('/')+'<br>%{text}<extra></extra>'});
-  });
-  // 加拿大
-  const caData=WAREHOUSES['佳邮（加拿大）'];
-  if(caData)traces.push({type:'scattergeo',lat:caData.map(l=>l.lat),lon:caData.map(l=>l.lon),mode:'markers+text',text:caData.map(l=>l.label),textfont:{size:9,color:'#00838F'},marker:{size:10,color:'#00838F'},name:'佳邮(加拿大)',hovertemplate:'佳邮(加拿大)<br>%{text}<extra></extra>'});
-  // 英国
-  const gbData=WAREHOUSES['顺丰（英国）'];
-  if(gbData)traces.push({type:'scattergeo',lat:gbData.map(l=>l.lat),lon:gbData.map(l=>l.lon),mode:'markers+text',text:gbData.map(l=>l.label),textfont:{size:9,color:'#6A1B9A'},marker:{size:10,color:'#6A1B9A'},name:'顺丰(英国)',hovertemplate:'顺丰(英国)<br>%{text}<extra></extra>'});
-  document.getElementById('tab1').innerHTML=`
-    <div class="stats-row">${ao.map(a=>`<div class="stat-card" style="background:${ac[a]}11"><div class="val" style="color:${ac[a]}">${US.filter(x=>(x.sub_regions||[]).includes(a)).length}</div><div class="lbl">${a}</div></div>`).join('')}</div>
-    <div class="card"><h3>美国供应商分布图</h3><p class="caption">颜色=区域归属，点=仓库。🇨🇦加拿大：佳邮 ｜ 🇬🇧英国：顺丰</p><div class="chart" id="chartMap" style="height:420px"></div></div>`;
-  setTimeout(()=>{Plotly.newPlot('chartMap',traces,{geo:{scope:'world',showland:true,landcolor:'#f8f8f8',showocean:true,oceancolor:'#e8f0fe',showcountries:true,countrycolor:'#ddd',showframe:false,center:{lat:38,lon:-98},lonaxis:{range:[-128,-65]},lataxis:{range:[25,52]},projection:{type:'albers usa'}},showlegend:true,legend:{x:1,y:1,font:{size:9}},margin:{t:10,l:10,r:10,b:10}},{responsive:true});},300);
-})();
+<div style="text-align:center;color:#aaa;font-size:12px;padding:20px">2026上半年度 · 后段供应商考核报告 · HANHAI</div>
+</div>
 
-// ═══  Tab2: 排名总览 ═══
-(function(){
-  document.getElementById('tab2').innerHTML=`
-    <div style="margin-bottom:14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px"><span style="font-weight:600;font-size:13px;margin-right:6px">筛选：</span><button class="btn on" onclick="doFilter('全部',this)">全部</button><button class="btn" onclick="doFilter('美国',this)">🇺🇸 美国</button><button class="btn" onclick="doFilter('英国',this)">🇬🇧 英国</button><button class="btn" onclick="doFilter('加拿大',this)">🇨🇦 加拿大</button><span style="margin:0 6px;color:#ddd">|</span>${ao.map(a=>`<button class="btn" onclick="doFilter('${a}',this)">${a}</button>`).join('')}</div>
-    <div class="grid2"><div class="card"><h3 id="rkTitle">供应商排名</h3><div id="rkTbl"></div></div><div class="card"><h3>评分对比</h3><div class="chart" id="chartBar" style="height:400px"></div></div></div>`;
-  doFilter('全部',document.querySelector('.btn'));
-})();
-function doFilter(f,btn){
-  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
-  let L;if(f==='全部')L=R;else if(['美国','英国','加拿大'].includes(f))L=R.filter(x=>x.region===f);else L=US.filter(x=>(x.sub_regions||[]).includes(f));
-  document.getElementById('rkTitle').textContent=f+' ('+L.length+'家) 均分'+(L.reduce((s,x)=>s+x.total,0)/L.length).toFixed(1);
-  let t='<table><tr><th>#</th><th>供应商</th><th>区域</th><th>类型</th><th>评分</th><th>人数</th></tr>';
-  L.forEach(x=>{
-    const rs=(x.sub_regions||[]).filter(r=>r!=='全美');
-    const rt=rs.map(r=>`<span style="color:${ac[r]||'#999'};font-size:10px;margin:0 2px">●${r}</span>`).join('');
-    t+=`<tr><td>${x.rank}</td><td style="text-align:left;font-weight:600">${x.name}${x.people<3?' <span style="color:#E65100;font-size:10px">🔺</span>':''}</td><td>${rt||'—'}</td><td>${x.btag}</td><td class="${x.sc}">${x.total.toFixed(1)}</td><td style="font-size:10px;color:#888">${x.people}</td></tr>`;
-  });
-  document.getElementById('rkTbl').innerHTML=t+'</table>';
-  const avg=L.reduce((s,x)=>s+x.total,0)/L.length;
-  Plotly.newPlot('chartBar',[{type:'bar',y:L.map(x=>x.name).reverse(),x:L.map(x=>x.total).reverse(),orientation:'h',marker:{color:L.map(x=>x.total>=9?'#2e7d32':x.total>=8?'#4472C4':'#C00000').reverse()},text:L.map(x=>x.total.toFixed(1)).reverse(),textposition:'outside'}],{xaxis:{range:[0,10.5]},margin:{t:10,l:160,r:50,b:30},shapes:[{type:'line',x0:avg,x1:avg,y0:-0.5,y1:L.length-0.5,line:{dash:'dash',color:'gray'}}],annotations:[{x:avg+0.1,y:L.length-1,text:'均线'+avg.toFixed(1),showarrow:false,font:{color:'gray'},xanchor:'left'}]},{responsive:true});
-}
+<!-- 先只放Tab切换测试 -->
+<script>
+document.getElementById("nav0").onclick = function() {
+  document.getElementById("t0").style.display = "block";
+  document.getElementById("t1").style.display = "none";
+  document.getElementById("t2").style.display = "none";
+  document.getElementById("t3").style.display = "none";
+  document.getElementById("nav0").classList.add("on");
+  document.getElementById("nav1").classList.remove("on");
+  document.getElementById("nav2").classList.remove("on");
+  document.getElementById("nav3").classList.remove("on");
+};
+document.getElementById("nav1").onclick = function() {
+  document.getElementById("t0").style.display = "none";
+  document.getElementById("t1").style.display = "block";
+  document.getElementById("t2").style.display = "none";
+  document.getElementById("t3").style.display = "none";
+  document.getElementById("nav0").classList.remove("on");
+  document.getElementById("nav1").classList.add("on");
+  document.getElementById("nav2").classList.remove("on");
+  document.getElementById("nav3").classList.remove("on");
+};
+console.log("Tab切换已就绪");
+</script>
+<script>
+var DATA = {"results": [{"name": "SYCO", "total": 8.62, "zg_n": 0, "gh_n": 10, "region": "美国", "biz_type": "散货/拆送", "coop": "合作中", "contract": "", "pool": " | 亚马逊自提", "detail": "整柜直送（UPS）\n拆送业务（亚马逊物流和UPS）", "history": "响应速度:响应速度：较慢\n异常处理能力：一般\n服务稳定性：较差", "good": ["1、路由更新及时\nPOD回传快\n2、亚马逊转仓能力强", "1.亚马逊转仓能力强\n2.POD回传快\n3.系统功能清晰\n4.会及时通知对应操作修改DW", "1.亚马逊转仓能力强\n2.POD回传快", "1、转仓的货物派送快，POD回传也快；2、有问题及时反馈", "1.系统智能，会采纳优化的建议\n2.POD回传快\n3.亚马逊可转仓仓点拿约送仓能力强", "提拆很快，派送和POD也算快速", "1.亚马逊转仓能力强\n2.POD回传快", "1.POD回传及时\n2.转仓自提拿约能力较好", "POD回传及时"], "bad": ["供应商不足及需要优化的地方（至少2点）", "1.账单分多次出", "1.账单分多次出", "1.账单分多次出", "1、账单分多次出；2、亚马逊转仓失败的货物需要走第三方派送，价格贵时效久；3、SKU标签必须按他们的模板提交，经常有客户质疑为什么不能自己调整，为什么其他海外仓不需要这样  4、亚马逊入仓时间有时候不准确", "1.操作订单时效较慢\n2.一个柜需分多次出账，不利于及时闭环", "回复消息慢，账单慢", "1.账单需要分多周才能出完费用", "1.账单需要分多次出", "单柜账单无法一次性出完"], "sub_regions": ["美西"], "intro": "", "biz_label": "散货", "good_summary": ["亚马逊转仓能力强\n2.POD回传快\n3.系统功能清晰\n4.会及时通知对应操作修改DW", "系统智能，会采纳优化的建议\n2.POD回传快\n3.亚马逊可转仓仓点拿约送仓能力强", "转仓的货物派送快，POD回传也快；2、有问题及时反馈", "POD回传及时\n2.转仓自提拿约能力较好", "提拆很快，派送和POD也算快速"], "bad_summary": ["账单需要分多周才能出完费用", "单柜账单无法一次性出完", "账单分多次出；2、亚马逊转仓失败的货物需要走第三方派送，价格贵时效久；3、SKU标签必须按他们的模板提交，经常有客户质疑为什么不能自己调整，为什么其他海外仓不需要这样  4、亚马逊入仓时间有时候不准确", "操作订单时效较慢\n2.一个柜需分多次出账，不利于及时闭环", "回复消息慢，账单慢"], "supplier_intro": "*成立于2015年， 美国公司，运营团队在国内。目前公司在LA、Dallas有自营仓库，仓库地址分别为12021 Woodruff Ave, Downey, CA 90241和4600 S Hardin Blvd Ste100, McKinney, TX 75070。（无自有卡车和车架）\n*FBA全美最大UPS派送账号持有者\n*亚马逊物流最大的战略合作伙伴\n*行业内唯一实现仓库自动化运营的公司", "main_biz": "整柜直送（UPS）\n拆送业务（亚马逊物流和UPS）", "curr_biz": "拆送业务（亚马逊物流）", "dev_biz": "整柜直送（UPS）\n拆送业务（UPS）", "coverage_ports": "全美"}, {"name": "17Shippings", "total": 8.59, "zg_n": 0, "gh_n": 2, "region": "美国", "biz_type": "散货/拆送", "coop": "合作中", "contract": "", "pool": " | SEA 拆送&整柜直送\nOAK 拆送&整柜直送", "detail": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "history": "响应速度:响应速度：正常\n异常处理能力：一般\n服务稳定性：正常", "good": ["及时回复信息、拿约能力较好"], "bad": ["供应商不足及需要优化的地方（至少2点）", "中国团队处理事务，有时差延误，提拆派等事宜有延误"], "sub_regions": ["美西"], "intro": "", "biz_label": "散货", "good_summary": ["及时回复信息、拿约能力较好"], "bad_summary": ["中国团队处理事务，有时差延误，提拆派等事宜有延误"], "supplier_intro": "成立于2022年，总部在西雅图，国内办事处在湖南长沙，目前公司在OAK (2527 Grant Ave.San Leandro, CA 94579),SEATTLE( 20024 85th Ave S, Kent , WA 98031),Houston(411 Cravens Rd, Ste 100，Missouri City，TX，77489)自营仓库.全美港口提柜派送，自营仓提拆派服务，奥克兰自有车25辆，车架40个左右。", "main_biz": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "curr_biz": "OAK拆送业务（亚马逊、商业地址）", "dev_biz": "整柜直送（商业地址,亚马逊）", "coverage_ports": "美西全区域、美中HOU周边、美东全区域"}, {"name": "西部快线", "total": 8.55, "zg_n": 0, "gh_n": 7, "region": "美国", "biz_type": "散货/拆送", "coop": "合作中", "contract": "", "pool": " | LA/LB 拆送", "detail": "", "history": "响应速度:响应速度：正常\n异常处理能力：一般\n服务稳定性：一般", "good": ["POD回传及时", "1.反馈码头异常及时\n2.POD回传较快，系统好用", "1.POD回传快\n2.系统智能", "1.POD回传交快\n2.loca拿约能力较好", "POD回传快\n系统更新及时"], "bad": ["供应商不足及需要优化的地方（至少2点）", "1:客服态度需要提升\n2.长途仓大部分都出不去，派送能力较弱\n3.操作能力弱，需要操作很久", "1.价格相对较高\n2.集货仓点建议提前告知，提早给予改派建议", "1.难以派送的仓点反馈晚\n2.操作指令操作慢", "1.集货仓点无法提前告知", "目前对接稀少，待观察"], "sub_regions": ["美西"], "intro": "", "biz_label": "散货", "good_summary": ["反馈码头异常及时\n2.POD回传较快，系统好用", "POD回传交快\n2.loca拿约能力较好"], "bad_summary": ["1:客服态度需要提升\n2.长途仓大部分都出不去，派送能力较弱\n3.操作能力弱，需要操作很久", "价格相对较高\n2.集货仓点建议提前告知，提早给予改派建议", "难以派送的仓点反馈晚\n2.操作指令操作慢", "目前对接稀少，待观察"], "supplier_intro": "", "main_biz": "", "curr_biz": "", "dev_biz": "", "coverage_ports": ""}, {"name": "NJ盈仓", "total": 8.32, "zg_n": 2, "gh_n": 10, "region": "美国", "biz_type": "综合", "coop": "合作中", "contract": "", "pool": "", "detail": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "history": "", "good": ["1、回复处理信息及时\n2、FBX表格会同步货物安排进度", "1:柜子未清关完成会及时反馈未放行情况", "1、FBA：POD回传快；2、FBX有问题会及时提出", "1. FBX共享表格可查进度", "1、提柜调度很关注柜子状态，及时反馈是否有hold。\n2、还空及时", "1.FBX调度人员分工清晰，表格进度更新及时\n2.DW时间不符通知的较为及时", "FBX表格更新及时"], "bad": ["供应商不足及需要优化的地方（至少2点）", "1.POD上传不及时", "1、POD回传不及时\n2、希音仓时常未及时更新计划交仓时间路由\n3、库内异常核实反馈较慢", "1.POD上传不及时", "1、柜租等账单付款麻烦，需要找美西的财务付款，加上有时差在；", "1. POD上传不及时\n2. 美西调拨订单调度无法查阅对应港后操作，建议提交系统功能需求，减少群内询问（容易漏单）", "1、线上表格存在更新不及时，建议多使用系统\n2、FBX客户预约的订单，可供客户预约日期较少，需要指定日期。", "1.FBX订单系统无法查询到对应操作，建议上系统\n2.存在FBX出库临时找不到货的情况", "1，货量不足情况下无法有效拼车\n2，近期POD回传不及时"], "sub_regions": ["美东"], "intro": "", "biz_label": "散货&整柜", "good_summary": ["回复处理信息及时\n2、FBX表格会同步货物安排进度", "1:柜子未清关完成会及时反馈未放行情况", "FBX调度人员分工清晰，表格进度更新及时\n2.DW时间不符通知的较为及时", "FBA：POD回传快；2、FBX有问题会及时提出", "FBX共享表格可查进度", "提柜调度很关注柜子状态，及时反馈是否有hold。\n2、还空及时"], "bad_summary": ["POD上传不及时\n2. 美西调拨订单调度无法查阅对应港后操作，建议提交系统功能需求，减少群内询问（容易漏单）", "线上表格存在更新不及时，建议多使用系统\n2、FBX客户预约的订单，可供客户预约日期较少，需要指定日期。", "POD回传不及时\n2、希音仓时常未及时更新计划交仓时间路由\n3、库内异常核实反馈较慢", "货量不足情况下无法有效拼车\n2，近期POD回传不及时", "柜租等账单付款麻烦，需要找美西的财务付款，加上有时差在；", "FBX订单系统无法查询到对应操作，建议上系统\n2.存在FBX出库临时找不到货的情况"], "supplier_intro": "自营海外仓，使用时间2025年，面积19万尺，仓库地址：55 Jake Brown Rd, Old Bridge, NJ 08857", "main_biz": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "curr_biz": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "dev_biz": "-", "coverage_ports": "东西全区域，也涉及长途派送业务"}, {"name": "RAMBO（BOLAN）", "total": 8.31, "zg_n": 1, "gh_n": 3, "region": "美国", "biz_type": "综合", "coop": "合作中", "contract": "", "pool": "SEA&OAK | OAK 拆送", "detail": "加州及内华达州的整柜直送（亚马逊仓库、商业地址及卡车可进的私人住宅）以及拆送业务（亚马逊仓库、商业地址、私人住宅）", "history": "", "good": ["回复消息快，提拆，拿约正常，对接稳定，老板大气", "1.系统智能\n2.操作快，订单会保留操作完成图片"], "bad": ["供应商不足及需要优化的地方（至少2点）", "库内操作容易贴错标，消息不艾特人", "1.信息漏回复，偶尔不艾特人"], "sub_regions": ["美西"], "intro": "", "biz_label": "散货&整柜", "good_summary": ["回复消息快，提拆，拿约正常，对接稳定，老板大气", "系统智能\n2.操作快，订单会保留操作完成图片"], "bad_summary": ["库内操作容易贴错标，消息不艾特人", "信息漏回复，偶尔不艾特人"], "supplier_intro": "成立于2018年，美国总部位于加州 Oakland，在中国也设有办事处。公司在 LA 和 Oakland 拥有自营仓库，仓库地址为 26318 Corporate Avenue, Hayward CA 94545，自有卡车35辆、车架50个，可24小时为客户提供服务。", "main_biz": "加州及内华达州的整柜直送（亚马逊仓库、商业地址及卡车可进的私人住宅）以及拆送业务（亚马逊仓库、商业地址、私人住宅）", "curr_biz": "RAMBO：拆送\nAMG：整柜直送（亚马逊）年货量已超过1000柜", "dev_biz": "整柜直送（商业地址）业务", "coverage_ports": "加州"}, {"name": "SAV盈仓", "total": 8.17, "zg_n": 2, "gh_n": 6, "region": "美国", "biz_type": "综合", "coop": "合作中", "contract": "", "pool": "", "detail": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "history": "", "good": ["1、回复处理信息及时\n2、FBX表格会同步货物安排进度", "1:柜子未清关完成会及时反馈未放行情况", "1. FBX共享表格可查进度", "FBX表格更新及时"], "bad": ["供应商不足及需要优化的地方（至少2点）", "库内异常核实反馈较慢", "1：漏货以及送错仓频率较高，建议优化库内方案\n2：POD回传不及时", "1. POD上传不及时\n2. 美西调拨订单调度无法查阅对应港后操作，建议提交系统功能需求，减少群内询问（容易漏单）", "1，货量不足情况下无法有效拼车\n2，近期POD回传不及时"], "sub_regions": ["美东"], "intro": "", "biz_label": "散货&整柜", "good_summary": ["回复处理信息及时\n2、FBX表格会同步货物安排进度", "1:柜子未清关完成会及时反馈未放行情况", "FBX共享表格可查进度", "FBX表格更新及时"], "bad_summary": ["库内异常核实反馈较慢", "POD上传不及时\n2. 美西调拨订单调度无法查阅对应港后操作，建议提交系统功能需求，减少群内询问（容易漏单）", "1：漏货以及送错仓频率较高，建议优化库内方案\n2：POD回传不及时", "货量不足情况下无法有效拼车\n2，近期POD回传不及时"], "supplier_intro": "自营海外仓，使用时间2024年，面积10万尺，仓库地址：139 Prosperity Dr suit 100, Garden City, GA 31408", "main_biz": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "curr_biz": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "dev_biz": "-", "coverage_ports": "东西全区域，也涉及长途派送业务"}, {"name": "佳邮（加拿大）", "total": 8.02, "zg_n": 3, "gh_n": 4, "region": "加拿大", "biz_type": "综合", "coop": "战略合作", "contract": "海外仓 | 合同已发出，等待归档", "pool": " | 战略合作", "detail": "", "history": "响应速度:响应速度：\n异常处理能力：\n服务稳定性：", "good": ["1、拿约能力较好\n2、异常能及时反馈沟通", "拿约很快，交仓很快    有异常及时反馈", "1、邮件、群消息回复及时。\n2、对接过程中，在不断优化，较及时沟通", "1、拿约能力较好\n2、异常能及时反馈沟通"], "bad": ["供应商不足及需要优化的地方（至少2点）", "1.预约变动通知不及时", "预约经常变动，且无法提供到变动的凭证  2、FBX安排较慢，漏货1票 3、有时候不回复邮件", "1、资讯分享不够固定及时。", "1.预约变动通知不及时"], "sub_regions": ["加拿大"], "intro": "", "biz_label": "散货&整柜", "good_summary": ["拿约很快，交仓很快    有异常及时反馈", "拿约能力较好\n2、异常能及时反馈沟通", "邮件、群消息回复及时。\n2、对接过程中，在不断优化，较及时沟通"], "bad_summary": ["预约经常变动，且无法提供到变动的凭证  2、FBX安排较慢，漏货1票 3、有时候不回复邮件", "预约变动通知不及时", "资讯分享不够固定及时。"], "supplier_intro": "", "main_biz": "", "curr_biz": "", "dev_biz": "", "coverage_ports": ""}, {"name": "顺丰（英国）", "total": 7.83, "zg_n": 1, "gh_n": 3, "region": "英国", "biz_type": "综合", "coop": "深度合作", "contract": "海外仓 | 等待Alice确定，以及DPD账号问题", "pool": " | 深度合作", "detail": "", "history": "", "good": ["1、信息处理回复及时，异常反馈及时\n2、库内操作及时", "拆柜及时"], "bad": ["供应商不足及需要优化的地方（至少2点）", "1、有混货现象，没有给到优化措施\n2、系统未上线，对接耗时", "少量出现路由表的交仓计划更新不及时"], "sub_regions": ["英国"], "intro": "", "biz_label": "散货&整柜", "good_summary": ["信息处理回复及时，异常反馈及时\n2、库内操作及时", "拆柜及时"], "bad_summary": ["有混货现象，没有给到优化措施\n2、系统未上线，对接耗时", "少量出现路由表的交仓计划更新不及时"], "supplier_intro": "", "main_biz": "", "curr_biz": "", "dev_biz": "", "coverage_ports": ""}, {"name": "Rainbow Logistics Inc", "total": 7.47, "zg_n": 1, "gh_n": 10, "region": "美国", "biz_type": "综合", "coop": "合作中", "contract": "", "pool": " | LA/LB拆送&整柜直送", "detail": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）；处理快递（UPS 和FEDEX）， USPS 等业务具有很强", "history": "", "good": ["1.提、拆时效快\n2.沟通顺畅，态度好", "1.提、拆时效快\n2.沟通顺畅，态度好", "1.提、拆时效快\n2.沟通顺畅，态度好", "1.提、拆时效快\n2.沟通顺畅，态度好", "提、拆快", "1.提、拆时效快\n2.沟通顺畅，态度好", "1.提、拆时效快\n2.沟通顺畅，态度好", "提拆时效快", "1、积极主动，态度良好；\n2、空运提、派时效快"], "bad": ["供应商不足及需要优化的地方（至少2点）", "1.POD回传慢\n2.计划交仓时间回传滞后\n3.DW难以配合\n4、信息漏回复", "1.POD回传慢\n2.计划交仓时间回传滞后\n3.DW难以配合", "1.POD回传慢\n2.计划交仓时间回传滞后\n3.DW难以配合", "1.POD回传较慢\n2.计划交仓时间回传滞后\n3.DW难以配合", "不配合DW规则；交仓慢，POD慢，回复信息慢，价格柜", "1.POD回传较慢\n2.计划交仓时间回传滞后\n3.DW难以配合", "1.POD回传较慢\n2.计划交仓时间回传滞后\n3.DW难以配合", "1，预计交仓 系统路由滞后，部分交仓完成后才更新路由。\n2，DW配合度低\n3，部分POD回传慢+不准确"], "sub_regions": ["美西"], "intro": "", "biz_label": "散货&整柜", "good_summary": ["积极主动，态度良好；\n2、空运提、派时效快", "提、拆时效快\n2.沟通顺畅，态度好", "提、拆快"], "bad_summary": ["预计交仓 系统路由滞后，部分交仓完成后才更新路由。\n2，DW配合度低\n3，部分POD回传慢+不准确", "POD回传慢\n2.计划交仓时间回传滞后\n3.DW难以配合\n4、信息漏回复", "不配合DW规则；交仓慢，POD慢，回复信息慢，价格柜"], "supplier_intro": "成立于2010年，公司在LA、有自营仓库，仓库地址分别为415 S 7TH AVE, CITY OF INDUSTRY, CA 91746, US。拥有自营卡车9辆。车架12个", "main_biz": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）；处理快递（UPS 和FEDEX）， USPS 等业务具有很强地优势（邮局每天自家车子亲自送）", "curr_biz": "整柜直送（亚马逊）", "dev_biz": "整柜直送（商业地址）;希望为固定长期地址，独有系统会让接受仓库有着独特专属地服务品质", "coverage_ports": "美西全区域"}, {"name": "KENBO", "total": 7.31, "zg_n": 5, "gh_n": 3, "region": "美国", "biz_type": "综合", "coop": "合作中", "contract": "", "pool": " | LA/LB 直送", "detail": "海柜提送私人仓/中短途海柜直送亚马逊/本地仓提送亚马逊&私人仓/整柜拆送", "history": "响应速度:响应速度：较快\n异常处理能力：正常\n服务稳定性：正常", "good": [], "bad": [], "sub_regions": ["美西"], "intro": "", "biz_label": "散货&整柜", "good_summary": [], "bad_summary": [], "supplier_intro": "成立于2019年，总部在美国加州，暂无公司在国内。目前公司在LA有小型仓库，仓库地址在工业市。拥有自营卡车30辆。车架85个", "main_biz": "海柜提送私人仓/中短途海柜直送亚马逊/本地仓提送亚马逊&私人仓/整柜拆送", "curr_biz": "海柜提送私人仓/中短途海柜直送亚马逊/本地仓提送亚马逊&私人仓/整柜拆送", "dev_biz": "否", "coverage_ports": "LA&LB本地、北加州、拉斯、凤凰城"}, {"name": "MAX", "total": 7.3, "zg_n": 4, "gh_n": 0, "region": "美国", "biz_type": "整柜直送", "coop": "合作中", "contract": "", "pool": " | NYC整柜直送", "detail": "整柜直送（亚马逊、商业地址、私人地址）", "history": "响应速度:响应速度：\n异常处理能力：\n服务稳定性：", "good": [], "bad": [], "sub_regions": ["美东"], "intro": "", "biz_label": "整柜", "good_summary": [], "bad_summary": [], "supplier_intro": "成立于2022年，国内总部在深圳，目前公司在SAV、HOU、NJ有自营卡车，NJ40台、SAV15台、HOU8台,车架超300个", "main_biz": "整柜直送（亚马逊、商业地址、私人地址）", "curr_biz": "整柜直送（亚马逊/商业地址）", "dev_biz": "休斯顿整柜直送", "coverage_ports": "美东、美南区域"}, {"name": "DAL盈仓", "total": 7.24, "zg_n": 2, "gh_n": 8, "region": "美国", "biz_type": "综合", "coop": "合作中", "contract": "", "pool": "", "detail": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "history": "", "good": ["1、主动追踪PU#；\n2、POD上传快", "1、主动追踪PU#；2、POD上传很快", "1.POD回传快\n2.沟通顺畅，配合度高\n3.异常反馈较快", "1.POD回传快\n2.沟通顺畅，配合度高\n3.异常反馈较快", "响应及时；高效沟通"], "bad": ["供应商不足及需要优化的地方（至少2点）", "会常有货量不足需要集货情况，无法保证时效", "1、拆柜完成缺少拆柜完成的路由；2、异常核实能力差，需要隔天反馈和监控时长不够；3、有时候漏回复消息 4、货量不足集货情况时有发生", "1. FBA仓如需集货很久的，建议DAL盈仓共享消息给美西调度减少核爆品仓点调拨（从美西集货调拨再到DAL仓集货，几乎无法保证时效）\n2.监控可查阅时间太短，建议扩容", "1.个别时候漏回复", "群消息回复时效有待提升", "回传POD模版有误"], "sub_regions": ["美中"], "intro": "", "biz_label": "散货&整柜", "good_summary": ["POD回传快\n2.沟通顺畅，配合度高\n3.异常反馈较快", "主动追踪PU#；\n2、POD上传快", "响应及时；高效沟通"], "bad_summary": ["会常有货量不足需要集货情况，无法保证时效", "群消息回复时效有待提升", "拆柜完成缺少拆柜完成的路由；2、异常核实能力差，需要隔天反馈和监控时长不够；3、有时候漏回复消息 4、货量不足集货情况时有发生", "回传POD模版有误", "FBA仓如需集货很久的，建议DAL盈仓共享消息给美西调度减少核爆品仓点调拨（从美西集货调拨再到DAL仓集货，几乎无法保证时效）\n2.监控可查阅时间太短，建议扩容", "个别时候漏回复"], "supplier_intro": "自营海外仓，使用时间2024年，面积5万尺，仓库地址：5324 Peachtree Rd, Balch Springs, TX 75180", "main_biz": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "curr_biz": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "dev_biz": "-", "coverage_ports": "达拉斯周边区域"}, {"name": "AMG（YSP）", "total": 7.24, "zg_n": 3, "gh_n": 3, "region": "美国", "biz_type": "综合", "coop": "合作中", "contract": "", "pool": " | OAK 整柜直送", "detail": "加州及内华达州的整柜直送（亚马逊仓库、商业地址及卡车可进的私人住宅）以及拆送业务（亚马逊仓库、商业地址、私人住宅）", "history": "", "good": [], "bad": [], "sub_regions": ["美西"], "intro": "", "biz_label": "散货&整柜", "good_summary": [], "bad_summary": [], "supplier_intro": "成立于2018年，美国总部位于加州 Oakland，在中国也设有办事处。公司在 LA 和 Oakland 拥有自营仓库，仓库地址为 26318 Corporate Avenue, Hayward CA 94545，自有卡车35辆、车架50个，可24小时为客户提供服务。", "main_biz": "加州及内华达州的整柜直送（亚马逊仓库、商业地址及卡车可进的私人住宅）以及拆送业务（亚马逊仓库、商业地址、私人住宅）", "curr_biz": "RAMBO：拆送\nAMG：整柜直送（亚马逊）年货量已超过1000柜", "dev_biz": "整柜直送（商业地址）业务", "coverage_ports": "加州"}, {"name": "DRAYEASY", "total": 7.23, "zg_n": 3, "gh_n": 0, "region": "美国", "biz_type": "整柜直送", "coop": "合作中", "contract": "", "pool": " | ", "detail": "整柜直送（商业地址）", "history": "响应速度:响应速度：快\n异常处理能力：一般\n服务稳定性：正常", "good": [], "bad": [], "sub_regions": ["全美"], "intro": "平台型模式，无自有仓库和车队（类似滴滴）。轻资产型，规模议价空间大，但服务质量把控难度较大。", "biz_label": "整柜", "good_summary": [], "bad_summary": [], "supplier_intro": "DrayEasy，总部位于美国洛杉矶，提供Drayage、LTL、FTL、CFS、Home Delivery目的港拖车卡车物流服务。构建智慧物流履约生态平台（broker角色），集成8000余家北美优质承运商资源，覆盖超150万条运输路线。集成北美拖车询价、下单、物流追踪、文件回传、账单回传于一体。", "main_biz": "整柜直送（商业地址）", "curr_biz": "整柜直送（商业地址）", "dev_biz": "大件家具白手套派送业务", "coverage_ports": "拖车覆盖区域（全美）\n优势区域（所有内陆IPI点提柜派送、NY整柜派送、SAV整柜派送、长途整柜派送、超重柜派送）"}, {"name": "美雄", "total": 7.21, "zg_n": 0, "gh_n": 2, "region": "美国", "biz_type": "散货/拆送", "coop": "合作中", "contract": "", "pool": " | CHI拆送 &直送", "detail": "包括跨境电商（如 Amazon、Walmart、Wayfair ，Tiktok等平台卖家）和商业物流客户\n\n亚马逊常送地", "history": "响应速度:响应速度：较差\n异常处理能力：一般\n服务稳定性：一般", "good": ["1、提拆还及时", "1.配有国内对接客服\n2.提还柜及时"], "bad": ["供应商不足及需要优化的地方（至少2点）", "1、POD回传不够及时，有时会有错误\n2、账单准确性需提升\n3、异常没有做到及时主动反馈\n4、拆柜报告反馈慢\n5、ABL系统经常出现查询不到数据的情况", "1. FBA 亚马逊自提货物，POD回传慢，交仓变动大无反馈，较难配合DW\n2.沃尔玛MCI1n 几乎都发LTL ，异常成本高（如仓储）\n3.部分邮件未及时回复\n4.账单准确率需要再提高\n5.拆柜报告回传较慢，拆柜时间较为滞后不利于联宇更新系统路由节点"], "sub_regions": ["美中"], "intro": "", "biz_label": "散货", "good_summary": ["提拆还及时", "配有国内对接客服\n2.提还柜及时"], "bad_summary": ["FBA 亚马逊自提货物，POD回传慢，交仓变动大无反馈，较难配合DW\n2.沃尔玛MCI1n 几乎都发LTL ，异常成本高（如仓储）\n3.部分邮件未及时回复\n4.账单准确率需要再提高\n5.拆柜报告回传较慢，拆柜时间较为滞后不利于联宇更新系统路由节点", "POD回传不够及时，有时会有错误\n2、账单准确性需提升\n3、异常没有做到及时主动反馈\n4、拆柜报告反馈慢\n5、ABL系统经常出现查询不到数据的情况"], "supplier_intro": "成立于2018年，总部位于芝加哥，分公司位于达拉斯洛杉矶，国内的分公司位于武汉和深圳。\n芝加哥仓库地址：1475 Thorndale Ave Suite A, Itasca, IL 60143 约 100,000 平方英尺（Bonded Warehouse）拥有自营卡车20辆，车架6台。\n达拉斯仓库地址：8904 N Royal Ln, Irving, TX 75063 约 50,000 平方英尺（Bonded Warehouse）拥有自营卡车4辆，车架4台。\n洛杉矶仓库地址：15650 Don Julian Road, City Of Industry, CA 91745  约 43,000 平方英尺，拥有自营卡车5辆，车架3台。", "main_biz": "包括跨境电商（如 Amazon、Walmart、Wayfair ，Tiktok等平台卖家）和商业物流客户\n\n亚马逊常送地址：IND9，MDW2，IGQ2，MQJ1，FWA4\n沃尔玛常送地址：ORD1s, MCIN\n\n拖车运输，拆送 / 转运，整柜直送，仓储服务\n优势线路或核心服务：定制进出口空运/海运方案，含清关服务; Inland FCL 全柜运输及 LTL/FTL 服务;  多区域仓库网络和分拨中心支持库存管理; 提供亚马逊/沃尔玛等平台的电商仓配服务。", "curr_biz": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "dev_biz": "一件代发业务", "coverage_ports": "美西LAX周边、美中ORD以及DFW周边"}, {"name": "Twenty Transportation", "total": 7.2, "zg_n": 4, "gh_n": 0, "region": "美国", "biz_type": "整柜直送", "coop": "偶尔合作", "contract": "", "pool": " | 整柜直送偶尔合作", "detail": "码头提柜，火车站提柜，整柜直送（亚马逊、商业地址）", "history": "", "good": [], "bad": [], "sub_regions": ["美西"], "intro": "", "biz_label": "整柜", "good_summary": [], "bad_summary": [], "supplier_intro": "成立于2016年，位于洛杉矶。目前公司在LA、DALLAS、有自营卡车车队。拥有卡车40辆。车架300个", "main_biz": "码头提柜，火车站提柜，整柜直送（亚马逊、商业地址）", "curr_biz": "码头提柜，火车站提柜，整柜直送（亚马逊、商业地址）", "dev_biz": "Bonded Warehouse（保税仓）业务、Bond运输业务（In-Bond）、商业地址整柜直送。", "coverage_ports": "美西全区域、美中 Dallas 周边、Arizona（AZ）、Nevada（NV）"}, {"name": "DINGZHAO", "total": 7.07, "zg_n": 5, "gh_n": 2, "region": "美国", "biz_type": "综合", "coop": "合作中", "contract": "", "pool": " | ", "detail": "", "history": "响应速度:响应速度：较快\n异常处理能力：一般\n服务稳定性：正常", "good": [], "bad": [], "sub_regions": ["美西"], "intro": "", "biz_label": "散货&整柜", "good_summary": [], "bad_summary": [], "supplier_intro": "成立于2022年，总部位于洛杉矶，在广州在分点。目前公司LA、TX、GA有自营车队，拥有自营卡车18辆。车架40个", "main_biz": "整柜直送（亚马逊、商业地址）", "curr_biz": "整柜直送（亚马逊、商业地址）", "dev_biz": "拆送业务（商业地址）", "coverage_ports": "美西全区域、美中HOU周边、美东全区域"}, {"name": "SMART", "total": 7.03, "zg_n": 3, "gh_n": 4, "region": "美国", "biz_type": "综合", "coop": "合作中", "contract": "", "pool": "HOU | HOU直送&拆派", "detail": "整柜直送私人仓/亚马逊\nLA NY SAV CHI  HOU 拆送亚马逊/私人仓\n一件代发\n空运", "history": "响应速度:响应速度：正常\n异常处理能力：一般\n服务稳定性：一般", "good": ["芝加哥配柜FBA,拿约和派送时效，POD回传时效不错", "1、FBA拿约和派送能力可以；2、FBX会每天主动发送预约和交仓安排，这点很好，就是有时候会漏发", "芝加哥主要配柜FBA，拿约和派送时效不错", "FBA拿约时效可以"], "bad": ["供应商不足及需要优化的地方（至少2点）", "1、操作指令完成的比较慢", "1、FBX预约不上没有及时反馈；2、FBX派送较慢，价格贵；3、多次强调收货人需要使用尾板需要等操作和国内客户确认后再安排很少有做到的；4、只能承担很少的一部分理赔费用，且是smart自己导致的异常，例如2票TK仓漏货在仓，客户后台产生很高的异常费用；后续这2票smart财务还要收联宇的仓储费，扯了", "暂时对接的还不太多。\n1，拆柜报告反馈时效可加强；\n2，FBX的预约信息（预约号码,IBR号码） 通常预报有，但是还是会单独问。"], "sub_regions": ["美湾", "美西", "美中"], "intro": "", "biz_label": "散货&整柜", "good_summary": ["芝加哥配柜FBA,拿约和派送时效，POD回传时效不错", "FBA拿约和派送能力可以；2、FBX会每天主动发送预约和交仓安排，这点很好，就是有时候会漏发", "芝加哥主要配柜FBA，拿约和派送时效不错"], "bad_summary": ["操作指令完成的比较慢", "FBX预约不上没有及时反馈；2、FBX派送较慢，价格贵；3、多次强调收货人需要使用尾板需要等操作和国内客户确认后再安排很少有做到的；4、只能承担很少的一部分理赔费用，且是smart自己导致的异常，例如2票TK仓漏货在仓，客户后台产生很高的异常费用；后续这2票smart财务还要收联宇的仓储费，扯了", "暂时对接的还不太多。\n1，拆柜报告反馈时效可加强；\n2，FBX的预约信息（预约号码,IBR号码） 通常预报有，但是还是会单独问。"], "supplier_intro": "成立时间：14年在美国成立\n NJ:45 Patrick Ave, UNIT B Edison, NJ 08837\nCHI:825 Veterans Parkway, Bolingbrook, unit B IL 60440\nSAV:102 Norwest Court, Pooler, GA 31322\nHOU:15005 East Hampton Circle, Houston, TX 77071\nLA:4502 E Airport Dr Ontario, CA 91761", "main_biz": "整柜直送私人仓/亚马逊\nLA NY SAV CHI  HOU 拆送亚马逊/私人仓\n一件代发\n空运", "curr_biz": "2024-至今\nAIR：8\n一件代发：175\n拆柜：564\n直送亚马逊：86\n直送私人仓：58", "dev_biz": "-", "coverage_ports": "整柜直送私人仓/亚马逊\n\nLA  CHI  HOU 拆送亚马逊/私人仓\n\n一件代发"}, {"name": "NEW WORLD", "total": 6.88, "zg_n": 4, "gh_n": 10, "region": "美国", "biz_type": "综合", "coop": "合作中", "contract": "", "pool": "", "detail": "洛杉矶亚马逊仓/商业地址整柜直送", "history": "响应速度:响应速度：较差\n异常处理能力：正常\n服务稳定性：正常", "good": [], "bad": [], "sub_regions": ["美西"], "intro": "自营卡车行，专注洛杉矶亚马逊仓/商业地址整柜直送。", "biz_label": "散货&整柜", "good_summary": [], "bad_summary": [], "supplier_intro": "自营卡车行", "main_biz": "洛杉矶亚马逊仓/商业地址整柜直送", "curr_biz": "洛杉矶亚马逊仓/商业地址整柜直送", "dev_biz": "-", "coverage_ports": "LA/LB"}, {"name": "长年长富", "total": 6.67, "zg_n": 4, "gh_n": 6, "region": "美国", "biz_type": "综合", "coop": "合作中", "contract": "", "pool": " | CHI /NYC拆送&直送", "detail": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "history": "响应速度:响应速度：近期较慢\n异常处理能力：一般\n服务稳定性：一般", "good": ["1、芝加哥多配柜FBA货物，交仓时效不错，POD回传及时\n2、有夜班人员处理信息\n3、直送柜，可以尝试帮忙买约", "1.提拆还较为及时", "1.提拆派较好，2.价格合理", "提拆及时"], "bad": ["供应商不足及需要优化的地方（至少2点）", "1、内部人员工作衔接不到位，已确认信息会重复确认\n2、报价反馈慢\n3、近期因账号问题，直送柜无法买约，看是否能尽快恢复", "1. 内部信息衔接不到位，已确认的信息会重复确认，较为内耗\n2.建议DW时间不准确，风险把控意识有待加强\n3.闭环能力有待加强，核实中的订单未主动反馈跟进结果，需一再催促回复\n4.单询费用报价慢", "拿约买约能力一般，回复信息较慢"], "sub_regions": ["美中", "美东"], "intro": "深耕美中/美东仓配，自有仓资产模式（纽约33万尺/亚特兰大15万尺/芝加哥7.5万尺扩建中）。核心精力投放于海外端仓配及整柜直送。", "biz_label": "散货&整柜", "good_summary": ["芝加哥多配柜FBA货物，交仓时效不错，POD回传及时\n2、有夜班人员处理信息\n3、直送柜，可以尝试帮忙买约", "提拆还较为及时", "提拆派较好，2.价格合理"], "bad_summary": ["内部信息衔接不到位，已确认的信息会重复确认，较为内耗\n2.建议DW时间不准确，风险把控意识有待加强\n3.闭环能力有待加强，核实中的订单未主动反馈跟进结果，需一再催促回复\n4.单询费用报价慢", "内部人员工作衔接不到位，已确认信息会重复确认\n2、报价反馈慢\n3、近期因账号问题，直送柜无法买约，看是否能尽快恢复", "拿约买约能力一般，回复信息较慢"], "supplier_intro": "长年长富（深圳）跨境物流有限公司（FORTUNE LOGISTICS INC.）成立于2018年，，国内总部在深圳。目前公司在LA、NJ、CHI、SAV有自营仓库，拥有自营卡车140辆。车架150个，车头50", "main_biz": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "curr_biz": "整柜直送（亚马逊）\n整柜直送（商业地址）\n拆送", "dev_biz": "洛杉矶", "coverage_ports": "LA、NJ、CHI、SAV"}, {"name": "LA盈仓", "total": 6.42, "zg_n": 4, "gh_n": 12, "region": "美国", "biz_type": "综合", "coop": "合作中", "contract": "", "pool": "", "detail": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "history": "", "good": ["1.FBX-LOCAL遇到异常情况会及时反馈，如车坏会及时附上截图\n2.提柜组及时反馈码头不放行情况。", "1:柜子未清关完成会及时反馈未放行情况", "1、local FBX安排得很好，及时反馈；2、提拆有异常需要加急的可以安排到", "1.local 非沃尔玛仓的，在FBX预约信息板块可以查到预约情况，点赞\n2. 提柜组及时反馈码头不放行情况，点赞", "1.FBX-local会在跟进记录更新进度\n2.提柜拆柜计划可以体现表格内", "1、核爆品始终优先，即使在爆仓状态下也维持时效。\n2、FBX定制化订单可以配合", "1.FBX-local会在跟进记录更新进度\n2.提柜拆柜计划可以体现表格内", "1.集货能力较好\n2.提还柜异常能及时反馈"], "bad": ["供应商不足及需要优化的地方（至少2点）1、拆柜破损异常无反馈，导致客户投诉才知道；2、长途和美西部分POD回传很慢，交仓后5-6天才收到POD；3、频繁送错仓，导致多次投诉", "1、POD回传有误，回传慢\n2、操作指令有时候处理的慢，在群里催促多次没有反馈", "1、POD不准确/不上传，进度反馈慢，\n2、货物漏仓，送错仓", "FBA路由群消息部分回复不及时（当天的消息没做到当天回复，部分已读不回）例如：PC2607200104", "1：货量不够时LTL报价不准确，报价与实际下单价格相差几百美金，建议提高报价准确度。\n2：拆柜异常无及时反馈", "1、爆仓问题；2、拆柜有异常没有及时反馈；3、最近大货组操作变慢，且操作过程有异常没有反馈；4、长途FBX核实消息/异常慢，回传POD慢", "1.POD回传慢+不准确（特别是希音仓如：PC2607170077  &PC2607170079+传错调拨中转的POD 如PC2607150093  调拨批次，较内耗）  \n\n2. 送错仓+混货情况+未按要求打板+TT仓供应商未按预约送 等人为异常多", "1.调拨NJ/SAV/TX出现漏货/误装\n2.FBX长途订单POD回传慢，不够主动，基本是单票群内催POD，操作自行上传", "1、拆柜异常不及时反馈。990260700008840。交仓后返回来找库内核实才知晓。 \n2、拆柜异常当下未反馈，过了三四个月之后大货组再通知。\n3、拆柜异常当下反馈后操作也邮件给了指令，但过了三四个月之后，大货组群里又通知无指令催处理。", "1.调拨NJ/SAV/TX出现漏货/误装\n2.FBX长途订单POD回传慢，不够主动，基本是单票群内催POD，操作自行上传", "1.长途FBX POD不主动回传，需要催促\n2.货物漏仓情况较多", "POD回传慢\nFBA路由群消息部分回复不及时（当天的消息没做到当天回复，部分已读不回）"], "sub_regions": ["美西"], "intro": "", "biz_label": "散货&整柜", "good_summary": ["FBX-LOCAL遇到异常情况会及时反馈，如车坏会及时附上截图\n2.提柜组及时反馈码头不放行情况。", "核爆品始终优先，即使在爆仓状态下也维持时效。\n2、FBX定制化订单可以配合", "local FBX安排得很好，及时反馈；2、提拆有异常需要加急的可以安排到", "1:柜子未清关完成会及时反馈未放行情况", "集货能力较好\n2.提还柜异常能及时反馈", "local 非沃尔玛仓的，在FBX预约信息板块可以查到预约情况，点赞\n2. 提柜组及时反馈码头不放行情况，点赞", "FBX-local会在跟进记录更新进度\n2.提柜拆柜计划可以体现表格内"], "bad_summary": ["POD回传慢+不准确（特别是希音仓如：PC2607170077  &PC2607170079+传错调拨中转的POD 如PC2607150093  调拨批次，较内耗）  \n\n2. 送错仓+混货情况+未按要求打板+TT仓供应商未按预约送 等人为异常多", "供应商不足及需要优化的地方（至少2点）1、拆柜破损异常无反馈，导致客户投诉才知道；2、长途和美西部分POD回传很慢，交仓后5-6天才收到POD；3、频繁送错仓，导致多次投诉", "爆仓问题；2、拆柜有异常没有及时反馈；3、最近大货组操作变慢，且操作过程有异常没有反馈；4、长途FBX核实消息/异常慢，回传POD慢", "调拨NJ/SAV/TX出现漏货/误装\n2.FBX长途订单POD回传慢，不够主动，基本是单票群内催POD，操作自行上传", "FBA路由群消息部分回复不及时（当天的消息没做到当天回复，部分已读不回）例如：PC2607200104", "POD回传慢\nFBA路由群消息部分回复不及时（当天的消息没做到当天回复，部分已读不回）", "POD回传有误，回传慢\n2、操作指令有时候处理的慢，在群里催促多次没有反馈", "长途FBX POD不主动回传，需要催促\n2.货物漏仓情况较多", "POD不准确/不上传，进度反馈慢，\n2、货物漏仓，送错仓", "拆柜异常不及时反馈。990260700008840。交仓后返回来找库内核实才知晓。 \n2、拆柜异常当下未反馈，过了三四个月之后大货组再通知。\n3、拆柜异常当下反馈后操作也邮件给了指令，但过了三四个月之后，大货组群里又通知无指令催处理。"], "supplier_intro": "自营海外仓，使用时间26年4月正式启用60万尺新，仓库地址：15710 San Antonio Ave, Chino, CA 91708", "main_biz": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "curr_biz": "整柜直送（亚马逊、商业地址）\n拆送业务（亚马逊、商业地址）", "dev_biz": "-", "coverage_ports": "美西全区域，也涉及长途派送业务"}, {"name": "MKK", "total": 5.97, "zg_n": 2, "gh_n": 0, "region": "美国", "biz_type": "整柜直送", "coop": "偶尔合作", "contract": "", "pool": "全美 | 整柜直送偶尔合作", "detail": "商业地址整柜直送、退运", "history": "响应速度:响应速度：\n异常处理能力：\n服务稳定性：", "good": [], "bad": [], "sub_regions": ["美西"], "intro": "美国洛杉矶TPO30本土自营车队，核心业务涵港口集装箱拖运、整车FTL、危险品DG运输及退运。双语无缝对接。", "biz_label": "整柜", "good_summary": [], "bad_summary": [], "supplier_intro": "我们是一家美国洛杉矶TPO30的本土自营车队，公司核心业务涵盖港口集装箱拖运、整车（FTL）运输、危险品（DG）运输及退运，长期为各类企业及跨境电商客户提供稳定高效的运输服务。凭借本地自营车队优势，我们响应快、时效稳、异常处理高效，双语无缝沟通。7x24全天候响应、充足运力保障（200+车架，80+车头）、合规安全（DOT:2819897），能为贵司美线货物提供稳定可靠的目的港末端运力支持。", "main_biz": "商业地址整柜直送、退运", "curr_biz": "商业地址整柜、DG9运输", "dev_biz": "退运", "coverage_ports": "优势区域：洛杉矶"}, {"name": "UTC", "total": 5.96, "zg_n": 3, "gh_n": 0, "region": "美国", "biz_type": "整柜直送", "coop": "合作中", "contract": "", "pool": " | NYC/SAV/HOU整柜直送", "detail": "", "history": "响应速度:响应速度：\n异常处理能力：\n服务稳定性：", "good": [], "bad": [], "sub_regions": ["美东", "美湾"], "intro": "", "biz_label": "整柜", "good_summary": [], "bad_summary": [], "supplier_intro": "等待填写", "main_biz": "", "curr_biz": "", "dev_biz": "", "coverage_ports": ""}, {"name": "SEN MART", "total": 5.14, "zg_n": 5, "gh_n": 0, "region": "美国", "biz_type": "整柜直送", "coop": "合作中", "contract": "", "pool": "全美 | 全美亚马逊/商业地址整柜直送", "detail": "整柜直送商业仓库", "history": "响应速度:响应速度：较差\n异常处理能力：一般\n服务稳定性：一般", "good": [], "bad": [], "sub_regions": ["全美"], "intro": "", "biz_label": "整柜", "good_summary": [], "bad_summary": [], "supplier_intro": "成立于2013年，美国纽约，洛杉矶和广州有办公室，纽约和洛杉矶有仓库。纽约洛杉矶芝加哥萨凡纳自营卡车", "main_biz": "整柜直送商业仓库", "curr_biz": "整柜直送商业仓库", "dev_biz": "直送FBA", "coverage_ports": "全美"}], "password": "94c2bc45", "updated": "2026-08-06"};
+var R=DATA.results.sort(function(a,b){return b.total-a.total;});R.forEach(function(x,i){x.rank=i+1;x.sc=x.total>=9?"sh":x.total>=8?"sm":"sl";x.ppl=x.zg_n+x.gh_n;});var US=R.filter(function(x){return x.region=="美国";});var AC={"美西":"#42A5F5","美中":"#FF7043","美湾":"#EF5350","美东":"#66BB6A"};var AO=["美西","美中","美湾","美东"];function btag(bl){if(!bl)return"散货&整柜";if(bl.indexOf("散货")>=0&&bl.indexOf("整柜")>=0)return"散货&整柜";if(bl.indexOf("散货")>=0)return"散货";if(bl.indexOf("整柜")>=0)return"整柜";return"散货&整柜";}
+function sw(i){for(var j=0;j<4;j++){document.getElementById("t"+j).style.display=j==i?"block":"none";document.getElementById("nav"+j).classList.toggle("on",j==i);}if(i==1)buildRank();if(i==2)buildRegion();if(i==3)buildDetail();}document.getElementById("nav0").onclick=function(){sw(0);};document.getElementById("nav1").onclick=function(){sw(1);};document.getElementById("nav2").onclick=function(){sw(2);};document.getElementById("nav3").onclick=function(){sw(3);};
+var rc="全部",rr="全部";function buildRank(){if(document.getElementById("rankFilter").innerHTML)return;var h="";[{c:"全部",l:"全部"},{c:"美国",l:"美国"},{c:"英国",l:"英国"},{c:"加拿大",l:"加拿大"}].forEach(function(x){h+='<button class="pil'+(x.c=="全部"?" on":"")+'" onclick="filterRC(\''+x.c+'\')" id="rci_'+x.c+'">'+x.l+'</button>';});h+='<span id="regionPills" style="display:none">';["全部","美西","美中","美湾","美东"].forEach(function(r){var rid=r=="全部"?"All":r;h+='<button class="pil on" onclick="filterRR(\''+r+'\')" id="rri_'+rid+'">'+(r=="全部"?"全部区域":r)+'</button>';});h+='</span><span class="fl" style="margin-left:16px">共 <b id="rankCnt">'+R.length+'</b> 家</span>';document.getElementById("rankFilter").innerHTML=h;renderRank();}
+function filterRC(c){rc=c;rr="全部";["全部","美国","英国","加拿大"].forEach(function(v){document.getElementById("rci_"+v).classList.remove("on");});document.getElementById("rci_"+c).classList.add("on");document.getElementById("regionPills").style.display=c=="美国"?"inline":"none";["All","美西","美中","美湾","美东"].forEach(function(id){var el=document.getElementById("rri_"+id);if(el)el.classList.toggle("on",id=="All");});renderRank();}
+function filterRR(r){rr=r;["All","美西","美中","美湾","美东"].forEach(function(id){var el=document.getElementById("rri_"+id);if(el)el.classList.remove("on");});var el=document.getElementById("rri_"+(r=="全部"?"All":r));if(el)el.classList.add("on");renderRank();}
+function renderRank(){var pool=rc=="全部"?R.slice():R.filter(function(x){return x.region===rc;});if(rc=="美国"&&rr!="全部")pool=pool.filter(function(x){return(x.sub_regions||[]).indexOf(rr)>=0;});document.getElementById("rankCnt").textContent=pool.length;var tbl="<table><tr><th>排名</th><th>供应商</th><th>类型</th><th>国家</th><th>区域</th><th>均分</th></tr>";pool.forEach(function(x,i){tbl+="<tr><td>"+(i+1)+"</td><td style=\"text-align:left;font-weight:600\">"+x.name+"</td><td>"+btag(x.biz_label)+"</td><td>"+x.region+"</td><td>"+(x.sub_regions||[]).join(",")+"</td><td class=\""+x.sc+"\">"+x.total.toFixed(1)+"</td></tr>";});tbl+="</table>";document.getElementById("rankTable").innerHTML="<h3>供应商排名 ("+pool.length+"家)</h3>"+tbl;drawChart(pool.slice(0,15));}
+function drawChart(data){Plotly.purge("rankChart");Plotly.newPlot("rankChart",[{type:"bar",orientation:"h",y:data.map(function(x,i){return(i+1)+". "+x.name;}),x:data.map(function(x){return x.total;}),marker:{color:data.map(function(x){return x.total>=9?"#2e7d32":x.total>=8?"#e65100":"#c62828";})},text:data.map(function(x){return x.total.toFixed(1);}),textposition:"outside"}],{margin:{l:150,r:40,t:10,b:30},xaxis:{range:[4,10]}},{responsive:true});}
+function buildRegion(){if(document.getElementById("regionTop").innerHTML)return;AO.forEach(function(a){var list=US.filter(function(x){return(x.sub_regions||[]).indexOf(a)>=0;}).sort(function(a,b){return b.total-a.total;}).slice(0,3);var h='<div class="cd" style="flex:1;min-width:220px"><h3 style="color:'+AC[a]+'">'+a+' TOP3</h3>';list.forEach(function(x,i){h+='<div style="padding:6px 0;border-bottom:1px solid #eee"><b>'+(i+1)+'.</b> '+x.name+' <span class="'+x.sc+'">'+x.total.toFixed(1)+'</span></div>';});h+='</div>';document.getElementById("regionTop").innerHTML+=h;});var bx=AO.map(function(a){var s=US.filter(function(x){return(x.sub_regions||[]).indexOf(a)>=0;}).map(function(x){return x.total;});return s.length?{type:"box",y:s,name:a,marker:{color:AC[a]},boxpoints:"all",jitter:0.3,pointpos:-1.8}:null;}).filter(Boolean);Plotly.newPlot("cBox",bx,{yaxis:{range:[4,10],title:"评分"},margin:{t:10,l:40,r:10,b:40}},{responsive:true});var pv=AO.map(function(a){return US.filter(function(x){return(x.sub_regions||[]).indexOf(a)>=0;}).length;});Plotly.newPlot("cPie",[{type:"pie",labels:AO,values:pv,marker:{colors:AO.map(function(a){return AC[a];})},textinfo:"label+value+percent",hole:0.4}],{margin:{t:10}},{responsive:true});}
+function buildDetail(){if(document.getElementById("detailSelect").innerHTML)return;var opts=R.map(function(x,i){return '<option value="'+i+'">'+x.name+'</option>';}).join("");document.getElementById("detailSelect").innerHTML='<h3>选择供应商</h3><select id="ds" onchange="showDetail()" style="padding:10px 16px;font-size:14px;border-radius:8px;border:2px solid #e0e0e0;width:100%;max-width:420px"><option value="">-- 请选择 --</option>'+opts+'</select>';document.getElementById("ds").value="0";showDetail();}
+function showDetail(){var v=document.getElementById("ds").value;if(v===""){document.getElementById("detailContent").innerHTML="";return;}var x=R[parseInt(v)];var gs=x.good_summary||x.good||[],bs=x.bad_summary||x.bad||[];var h='<h3>'+x.name+'</h3><div class="mt"><div class="mc"><div class="mv '+x.sc+'">'+x.total.toFixed(1)+'</div><div class="ml">综合均分</div></div><div class="mc"><div class="mv">'+x.region+'</div><div class="ml">国家</div></div><div class="mc"><div class="mv">'+x.ppl+'</div><div class="ml">评分人</div></div><div class="mc"><div class="mv" style="font-size:16px">'+btag(x.biz_label)+'</div><div class="ml">类型</div></div></div>';h+='<div class="cd"><h3>本次考核结果</h3><p><b>综合均分</b>: <span style="font-size:22px;font-weight:700;color:#4472C4">'+x.total.toFixed(1)+'</span> / 10</p><p><b>评分人数</b>: '+x.ppl+' 人</p><div id="scoreChart" style="height:300px;margin-top:10px"></div></div>';if(x.supplier_intro)h+='<div class="cd"><h3>公司介绍</h3><p>'+x.supplier_intro+'</p></div>';if(x.main_biz)h+='<div class="cd"><h3>主营业务</h3><p>'+x.main_biz.replace(/\\n/g,"<br>")+'</p></div>';if(gs.length||bs.length){h+='<div style="display:flex;gap:14px">';if(gs.length)h+='<div class="cd" style="flex:1"><h3>操作优势</h3><div class="gd">'+gs.filter(Boolean).slice(0,10).map(function(g){return"✅ "+g;}).join("<br>")+'</div></div>';if(bs.length)h+='<div class="cd" style="flex:1"><h3>待改善</h3><div class="bd">'+bs.filter(Boolean).slice(0,10).map(function(b){return"⚠️ "+b;}).join("<br>")+'</div></div>';h+='</div>';}document.getElementById("detailContent").innerHTML=h||"<p>暂无数据</p>";setTimeout(function(){Plotly.newPlot("scoreChart",[{type:"bar",x:["服务表现(65%)","工作配合度(15%)","总体成本(20%)"],y:[6.5,1.5,2],name:"满分",marker:{color:"#e0e0e0"}},{type:"bar",x:["服务表现(65%)","工作配合度(15%)","总体成本(20%)"],y:[x.total*0.65,x.total*0.15,x.total*0.2],name:x.name,marker:{color:"#4472C4"},text:[(x.total*0.65).toFixed(1),(x.total*0.15).toFixed(1),(x.total*0.2).toFixed(1)],textposition:"outside"}],{barmode:"overlay",yaxis:{range:[0,10]},margin:{t:10,b:40}},{responsive:true});},300);}
 
-// ═══  Tab3: 供应商详情 ═══
-(function(){
-  let opts='';R.forEach((x,i)=>{opts+=`<option value="${i}">${x.rank}. ${x.name} (${x.total.toFixed(1)})</option>`;});
-  document.getElementById('tab3').innerHTML=`<div style="margin-bottom:10px"><select id="ss" onchange="showSup()" style="padding:10px 16px;font-size:14px;border-radius:8px;border:2px solid #e0e0e0;width:100%;max-width:420px">${opts}</select></div><div id="sd"></div>`;
-  showSup();
-})();
-function showSup(){
-  const x=R[parseInt(document.getElementById('ss').value)];
-  const rs=(x.sub_regions||[]).filter(r=>r!=='全美'),rt=rs.map(r=>`<span style="color:${ac[r]||'#999'};font-weight:600;margin:0 4px">●${r}</span>`).join('');
-  const gs=new Set((x.good||[]).map(g=>g.replace(/^\d+[、.]\s*/,'').trim()).filter(g=>g&&!g.includes('供应商不足')));
-  const bs=new Set((x.bad||[]).map(b=>b.replace(/^\d+[、.]\s*/,'').trim()).filter(b=>b&&!b.includes('供应商不足')&&!b.includes('需要优化的')));
-  document.getElementById('sd').innerHTML=`
-    <div class="stats-row"><div class="stat-card"><div class="val ${x.sc}">${x.total.toFixed(1)}</div><div class="lbl">综合均分</div></div><div class="stat-card"><div class="val">${x.region}</div><div class="lbl">国家</div></div><div class="stat-card"><div class="val" style="font-size:16px">${x.btag}</div><div class="lbl">业务类型</div></div><div class="stat-card"><div class="val">${x.people}</div><div class="lbl">评分人数</div></div></div>
-    ${x.supplier_intro?`<div class="card"><h3>公司介绍</h3><p style="font-size:13px;line-height:1.8;color:#444">${x.supplier_intro}</p></div>`:''}
-    <div class="grid2">${x.main_biz?`<div class="card"><h3>主营业务</h3><p style="font-size:13px;color:#555">${x.main_biz.replace(/\n/g,'<br>')}</p></div>`:''}${x.curr_biz?`<div class="card"><h3>现合作业务</h3><p style="font-size:13px;color:#555">${x.curr_biz.replace(/\n/g,'<br>')}</p></div>`:''}</div>
-    <div class="grid2">${x.dev_biz?`<div class="card"><h3>待开发业务</h3><p style="font-size:13px;color:#555">${x.dev_biz.replace(/\n/g,'<br>')}</p></div>`:''}${x.coverage_ports?`<div class="card"><h3>覆盖口岸</h3><p style="font-size:13px;color:#333;font-weight:600">${x.coverage_ports.replace(/\n/g,'<br>')}</p><p style="font-size:11px;color:#888;margin-top:6px">服务区域：${rt||'—'}</p></div>`:''}</div>
-    ${gs.size||bs.size?`<div class="grid2">${gs.size?`<div class="card"><h3>✅ 操作优势</h3><div class="good">${[...gs].slice(0,10).map(g=>'✅ '+g).join('<br>')}</div></div>`:''}${bs.size?`<div class="card"><h3>⚠️ 待改善</h3><div class="bad">${[...bs].slice(0,10).map(b=>'⚠️ '+b).join('<br>')}</div></div>`:''}</div>`:''}`;
-}
-
-// ═══  Tab4: 区域对比 ═══
-(function(){
-  document.getElementById('tab4').innerHTML=`
-    <div class="card"><h3>各区域供应商评分对比</h3><p class="caption">hover查看详情，点击图例筛选</p><div class="chart" id="chartAll" style="height:500px"></div></div>
-    <div class="grid2"><div class="card"><h3>美西 vs 美东</h3><div class="chart" id="chartWE" style="height:300px"></div></div><div class="card"><h3>美中 vs 美湾</h3><div class="chart" id="chartMG" style="height:300px"></div></div></div>`;
-  setTimeout(()=>{
-    const traces=[];ao.forEach(area=>{const L=US.filter(x=>(x.sub_regions||[]).includes(area)).sort((a,b)=>b.total-a.total);traces.push({type:'bar',y:L.map(x=>x.name),x:L.map(x=>x.total),orientation:'h',name:area+' ('+L.length+'家)',marker:{color:ac[area]},text:L.map(x=>x.total.toFixed(1)),textposition:'outside'});});
-    Plotly.newPlot('chartAll',traces,{barmode:'group',xaxis:{range:[0,10.5]},margin:{t:30,l:160,r:40,b:30}},{responsive:true});
-    const we=US.filter(x=>(x.sub_regions||[]).includes('美西')).sort((a,b)=>b.total-a.total);
-    const ee=US.filter(x=>(x.sub_regions||[]).includes('美东')).sort((a,b)=>b.total-a.total);
-    Plotly.newPlot('chartWE',[{type:'bar',y:we.map(x=>x.name),x:we.map(x=>x.total),orientation:'h',name:'美西',marker:{color:'#1565C0'},text:we.map(x=>x.total.toFixed(1)),textposition:'outside'},{type:'bar',y:ee.map(x=>x.name),x:ee.map(x=>x.total),orientation:'h',name:'美东',marker:{color:'#2E7D32'},text:ee.map(x=>x.total.toFixed(1)),textposition:'outside'}],{barmode:'group',xaxis:{range:[0,10.5]},margin:{t:10,l:140,r:40,b:20}},{responsive:true});
-    const mc=US.filter(x=>(x.sub_regions||[]).includes('美中')).sort((a,b)=>b.total-a.total);
-    const gw=US.filter(x=>(x.sub_regions||[]).includes('美湾')).sort((a,b)=>b.total-a.total);
-    Plotly.newPlot('chartMG',[{type:'bar',y:mc.map(x=>x.name),x:mc.map(x=>x.total),orientation:'h',name:'美中',marker:{color:'#E65100'},text:mc.map(x=>x.total.toFixed(1)),textposition:'outside'},{type:'bar',y:gw.map(x=>x.name),x:gw.map(x=>x.total),orientation:'h',name:'美湾',marker:{color:'#C62828'},text:gw.map(x=>x.total.toFixed(1)),textposition:'outside'}],{barmode:'group',xaxis:{range:[0,10.5]},margin:{t:10,l:140,r:40,b:20}},{responsive:true});
-  },300);
-})();
+console.log("OK "+R.length+" suppliers");
 </script>
 </body>
 </html>
-
